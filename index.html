@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="google-signin-client_id" content="617965711227-ak9h08uuhefcbn6v5ccq8io3bdh401ml.apps.googleusercontent.com">
+  <title>App</title>
+
+  <!--- Simantic CSS -->
+
+  <!--- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="style/style.css">
+
+  <!--- Jquery-->
+
+  <!-- google sign in -->
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+ 
+
+  <!-- Angular library -->
+  <script type="text/javascript" src="libs/angular/angular.min.js"></script>
+  <script type="text/javascript" src="libs/angular/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="libs/angular/angular-animate.min.js"></script>
+
+
+
+</head>
+
+<body ng-app="mainApp" ng-controller="mainCtrl">
+
+
+      <ui-view>Loading App.....</ui-view>
+
+
+</body>
+
+
+
+
+<!-- Application controllers -->
+
+
+ <script type="text/javascript" src="app.js"></script>
+ <script type="text/javascript" src="app_controller.js"></script>
+ <script type="text/javascript" src="app/home/home.js"></script>
+
+
+</html>
