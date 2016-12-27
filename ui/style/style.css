@@ -46,7 +46,7 @@
     min-height:50px!important;
 }
 md-sidenav {
-  width: 280px!important;
+  width: 260px!important;
 }
 .left-bar {
   position: absolute!important;
@@ -60,6 +60,26 @@ md-sidenav {
   height: 100%;
   overflow: auto;
 }
+
+/* main site search */
+.search-site input[type=text] {
+    outline: none;
+    border: none;
+    padding: 7.7px;
+    border-radius: 4.5px;
+    font-size: 15px;
+    padding-left: 31px;
+    width: 230px;
+}
+.search-site input[type=text]::-webkit-input-placeholder {
+  color:#e9e9e9;
+}
+.search-site .ico {
+    position: relative;
+    right: -33px;
+    top: 4.9px;
+    font-size: 19px;
+  }
 /* api - form  */
 
 .api-form {
@@ -171,5 +191,5 @@ md-sidenav {
 }
  
 ::-webkit-scrollbar-thumb {
-   background: #999;
-}
+   background: #a3a3a3;
+ }
