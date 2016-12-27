@@ -32,3 +32,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
 
  }]);
+
+//theme config
+app.config(['$mdThemingProvider',function($mdThemingProvider) {
+
+  $mdThemingProvider.theme('default')
+    .primaryPalette('green')
+    .accentPalette('green');
+}])
