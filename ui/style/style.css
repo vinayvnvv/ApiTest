@@ -52,6 +52,15 @@ md-sidenav {
   position: absolute!important;
   top:50px!important;
 }
+.right-screen {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: #000;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    overflow: auto;
+}
 .left-bar-align {
   position: absolute;
   top:0;

@@ -1,0 +1,26 @@
+
+
+<ng-include src="'templates/app_bar.html'"></ng-include>
+<div class="title-bar-height"></div>
+
+<div layout="column" ng-cloak>
+	<section layout="row" flex>
+
+		<ng-include src="'templates/left-bar.html'"></ng-include>
+
+
+
+		<md-content md-scroll-y="" layout="column" flex="" style="position: static;padding: 0">
+
+
+
+    		 <ng-include flex ng-show="false" src="'app/home/html/welcome-screen.html'"></ng-include>
+    		 <ng-include flex src="'app/home/html/api-view.html'"></ng-include>
+
+   	    </md-content>
+
+     </section>
+
+ </div>
+
+

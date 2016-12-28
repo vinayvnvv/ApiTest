@@ -1,0 +1,53 @@
+<div class="screen">
+  <div class="screen-leftbar">
+      <ng-include src="'templates/leftbar.html'">Loading...</ng-include>
+  </div>
+  <div class="screen-rightbar">
+  	
+  <ng-include src="'templates/app_bar.html'"></ng-include>
+
+  <div class="api-form">
+
+
+   <div class="input">
+                   <input type="text" placeholder="Enter Api Url"/>
+   </div>
+   <div class='select'>
+              <md-menu md-offset="0 -7">
+              <md-button aria-label="Open demo menu" ng-click="$mdOpenMenu($event)" class="md-raised drop-btn">
+                GET <md-icon md-menu-origin style="position: relative;top: -1px;left:-5px"><i class="material-icons">arrow_drop_down</i></md-icon>
+              </md-button>
+              <md-menu-content width="2">
+                <md-menu-item ng-repeat="item in [1, 2, 3]">
+                  <md-button ng-click="ctrl.announceClick($index)"> <span md-menu-align-target>Option</span> {{item}} </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+   </div>
+   <div class='submit'>
+                <md-button class="btn">SEND</md-button>
+  </div>
+   <div class='actions'>
+              <md-menu md-offset="0 -7">
+              <md-button aria-label="Open demo menu" ng-click="$mdOpenMenu($event)" class="drop-btn"><md-icon md-menu-origin style="position: relative;top: -1px;left:-5px"><i class="material-icons">arrow_drop_down</i></md-icon>
+              </md-button>
+              <md-menu-content width="2">
+                <md-menu-item ng-repeat="item in [1, 2, 3]">
+                  <md-button ng-click="ctrl.announceClick($index)"> <span md-menu-align-target>Option</span> {{item}} </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+  </div>
+ 
+
+    
+      
+
+  </div>
+
+
+
+
+
+  </div>
+</div>  
