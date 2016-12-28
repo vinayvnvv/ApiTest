@@ -37,6 +37,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 app.config(['$mdThemingProvider',function($mdThemingProvider) {
 
   $mdThemingProvider.theme('default')
-    .primaryPalette('blue-grey')
-    .accentPalette('blue-grey');
+    .primaryPalette('teal')
+    .accentPalette('teal');
 }])
