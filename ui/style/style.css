@@ -84,4 +84,7 @@ md-sidenav {
   display: flex;
   flex-direction:column;
  }
+ .api-list {
+    min-width:180px;
+ }
 
