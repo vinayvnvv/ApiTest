@@ -88,3 +88,27 @@ md-sidenav {
     min-width:180px;
  }
 
+
+.api-details-title-bar {
+  height:130px;
+}
+
+
+.caption {
+    margin-left: 9px;
+    padding: 5px 13px;
+    border-radius: 3px;
+}
+
+
+/* text alignment */
+.t-a-r {
+  text-align:right;
+}
+.t-a-l {
+  text-align:left;
+}
+
+.dim-text {
+  color:#777;
+}
