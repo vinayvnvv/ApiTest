@@ -1,4 +1,4 @@
-app.controller('mainCtrl', ['$scope', function($scope){
+app.controller('mainCtrl', ['$scope', 'Theme', function($scope, Theme){
 
 	 $scope.people = [
     { name: 'Janet Perkins', img: 'img/100-0.jpeg', newMessage: true },

@@ -1,17 +1,10 @@
-var theme = [
+app.service('Theme', ['$rootScope', function($rootScope) {
 
-              light: {
-                  leftBar: {
-                  	bgColor: "#f9f9f9",
-                    Color:"inherit"
-                  }
-              },
-              dark: {
-                  leftBar: {
-                  	bgColor: "#000000",
-                    Color:"#fff"
-                  }
-              }
+   console.log('Theme Service Called')
 
+   $rootScope.Theme_leftBarWidth = "240px";
+   $rootScope.Theme_appBarHeight = "60px";
+   $rootScope.Theme_titleBarHeight = "50px";
 
-            ];
+  
+}]);

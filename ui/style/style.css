@@ -19,9 +19,12 @@
 
 
 .app-bar {
-  height:50px!important;
-  min-height:50px!important;
   position: fixed;
+}
+.app-bar .title-divider {
+    width: 1px;
+    position: absolute;
+    
 }
 .title-bar-height {
     height:50px!important;
@@ -70,7 +73,7 @@ md-sidenav {
     width: 100%;
     height: 100%;
     top: 0;
-    padding-top: 50px; /*height of app bar */
+    
  }
 
  .scroll-y {
@@ -79,7 +82,6 @@ md-sidenav {
  }
 
  .left-bar {
-  width:240px;
   display: -webkit-flex; /* Safari */
   display: flex;
   flex-direction:column;

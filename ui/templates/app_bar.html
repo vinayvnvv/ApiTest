@@ -1,8 +1,9 @@
 
-    <md-toolbar class="md-hue-9 app-bar">
+    <md-toolbar class="md-hue-9 app-bar" ng-style='{"height":Theme_appBarHeight,"min-height":Theme_appBarHeight}'>
+    <div class="title-divider" md-colors="{background:'primary-700-0.40'}" ng-style='{ "left": Theme_leftBarWidth,"height": Theme_appBarHeight}'></div>
       <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
-          <md-icon ng-click="toggleLeftNav()"><i class="material-icons">menu</i></md-icon>
+          <md-icon ng-click="toggeLeftNav()"><i class="material-icons">menu</i></md-icon>
         </md-button>
         <h2>
           <span>API Manager</span>
