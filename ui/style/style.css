@@ -90,9 +90,12 @@ md-sidenav {
     min-width:180px;
  }
 
-
+.api-details {
+  min-width:500px!important;
+  overflow-x: auto;
+}
 .api-details-title-bar {
-  height:130px;
+
 }
 
 
@@ -100,6 +103,20 @@ md-sidenav {
     margin-left: 9px;
     padding: 5px 13px;
     border-radius: 3px;
+    z-index: 1;
+}
+.attach-caption {
+    position: relative;
+    left: -17px;
+    z-index: 2;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.md-caption .icon {
+    font-size: 15px;
+    top: 2.5px;
+    position: relative;
+    left:-2px;
 }
 
 
