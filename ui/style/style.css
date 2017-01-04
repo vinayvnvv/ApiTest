@@ -94,9 +94,7 @@ md-sidenav {
   min-width:500px!important;
   overflow-x: auto;
 }
-.api-details-title-bar {
 
-}
 
 
 .caption {
@@ -104,6 +102,8 @@ md-sidenav {
     padding: 5px 13px;
     border-radius: 3px;
     z-index: 1;
+    position: relative;
+    cursor: pointer;
 }
 .attach-caption {
     position: relative;

@@ -39,4 +39,4 @@ app.config(['$mdThemingProvider',function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('green')
     .accentPalette('green');
-}])
+}]);
