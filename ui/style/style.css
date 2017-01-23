@@ -1,59 +1,87 @@
-
-/* media queries for width*/
-@media screen and (min-width: 0px) and (max-width: 599px) {
-   .screen-leftbar {width:200px;min-width: 200px}
-   .screen-rightbar {width:700px;min-width: 700px}
-}
-@media screen and (min-width: 600px) and (max-width: 800px) {
-   .screen-leftbar {width:30%;}
-   .screen-rightbar {width:70%;left:30%;}
-}
-@media screen and (min-width: 800px) and (max-width: 1100px) {
-   .screen-leftbar {width:25%;}
-   .screen-rightbar {width:75%;left:25%;}
-}
-@media screen and (min-width: 1100px) and (max-width: 2000px) {
-   .screen-leftbar {width:22%;}
-   .screen-rightbar {width:78%;left:22%;}
-}
-
-
-.app-bar {
+.chat {
   position: fixed;
+  bottom: 0px;
+  margin-right: 50px;
+  right: 0;
+  height: 400px;
+  overflow: none;
+  width: 300px;
+  border: 1px solid #d9d9d9;
+  border-top:none;
+  box-shadow: 1px 11px 3px 1px #e9e9e9;
+  border-radius: 7px 7px 0 0 ;
 }
-.app-bar .title-divider {
-    width: 1px;
-    position: absolute;
-    
+.chat md-toolbar {
+  height:30px;
+  min-height: 30px;
+  border-radius: 7px 7px 0 0;
+  font-size: 11px;
 }
-.title-bar-height {
-    height:50px!important;
-    min-height:50px!important;
+.chat md-toolbar .title {
+  font-size: 13px;
+   line-height: 4;
+
 }
-md-sidenav {
-  width: 260px!important;
+.chat .container {
+  height:295px;
+  background-color: #fff;
+  padding: 4px;
+  overflow-y: auto;
+  padding-bottom: 35px;
+}
+.chat .container .msg {
+  border-radius: 10px;
+  padding: 7px 9px;
+  list-style: none;
+  width:70%;
+  display: block;
+  margin:3px 0px;
+  font-size:13px;
+}
+.chat .container .msg.me {
+  background-color: #e9e9e9;
+  color:#555;
+  float: right;
+}
+.chat .container .msg.bot {
+  background-color: #F44336;
+  color:#fff;
+  float: left;
+}
+.chat .field {
+  height:30px;
+  border-top: 1px solid #e9e9e9;
+  padding: 0 9px;
+  background: #fff;
+}
+.chat .field input {
+  height:100%;
+  width:100%;
+  border:none;
+  outline: none;
+  font-size: 14px;
+  color: #555;
+}
+.chat .field .send-fab {
+  position: absolute;
+  z-index: 3;
+  right:0;
+  bottom: -6px;
+  width: 30px;
+  height: 30px;
+  min-height: 30px;
 }
 
-/* main site search */
-.search-site input[type=text] {
-    outline: none;
-    border: none;
-    padding: 7.7px;
-    border-radius: 4.5px;
-    font-size: 15px;
-    padding-left: 31px;
-    width: 230px;
+.demo {
+      position: fixed;
+    top: 40%;
+    left: 30%;
+    transform: translateY(40deg);
+    transform: skew(170deg,170deg);
+    font-size: 70px;
+    color: #d0d0d0;
+    text-shadow: 5px 1px #ccc;
 }
-.search-site input[type=text]::-webkit-input-placeholder {
-  color:#e9e9e9;
-}
-.search-site .ico {
-    position: relative;
-    right: -33px;
-    top: 4.9px;
-    font-size: 19px;
-  }
-
 
 /* custom scrol bar style */
 ::-webkit-scrollbar {
@@ -68,66 +96,44 @@ md-sidenav {
    background: #a3a3a3;
  }
 
- .main-content {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    
- }
 
- .scroll-y {
-  overflow-y: auto;
-  overflow-x: hidden;
- }
-
- .left-bar {
-  display: -webkit-flex; /* Safari */
-  display: flex;
-  flex-direction:column;
- }
- .api-list {
-    min-width:180px;
- }
-
-.api-details {
-  min-width:500px!important;
-  overflow-x: auto;
+.ng-enter {
+  -webkit-transition: 0.3s;
+  transition: 0.3;
+  
+  opacity: 0;
+  position: relative;
+  bottom:-7px;
 }
 
-
-
-.caption {
-    margin-left: 9px;
-    padding: 5px 13px;
-    border-radius: 3px;
-    z-index: 1;
-    position: relative;
-    cursor: pointer;
-}
-.attach-caption {
-    position: relative;
-    left: -17px;
-    z-index: 2;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-.md-caption .icon {
-    font-size: 15px;
-    top: 2.5px;
-    position: relative;
-    left:-2px;
+.ng-enter-active {
+  opacity: 1;
+  position: relative;
+  bottom:0px;
 }
 
-
-/* text alignment */
-.t-a-r {
-  text-align:right;
+.ng-leave {
+  -webkit-transition: 0.3s;
+  transition: 1s;
+  
+  opacity: 1;
+  position: relative;
+  bottom:0px;
 }
-.t-a-l {
-  text-align:left;
+
+.ng-leave-active {
+  opacity: 0;
+  position: relative;
+  bottom:-7px;
 }
 
-.dim-text {
-  color:#777;
+.ng-move {
+  -webkit-transition: 1s;
+  transition: 1s;
+  
+  background: gold;
+}
+
+.ng-move-active {
+  background: #fff;
 }

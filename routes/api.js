@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 var events = require('./events');
+var bot = require('./bot');
 
-router.use('/events', events)
+router.use('/events', events);
+router.use('/bot', bot)
 
 
 

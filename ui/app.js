@@ -1,5 +1,5 @@
 //bootstartp App
-var app = angular.module('mainApp', ['ngMaterial', 'ui.router', 'ngAnimate']);
+var app = angular.module('mainApp', ['ngAnimate', 'ngMaterial', 'ui.router']);
 
 //Routing
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -18,8 +18,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     $stateProvider
        .state("app", {
        	  url: "/app",
-       	  templateUrl: "app/home/html/home.html",
-       	  controller: "homeCtrl"
+       	  templateUrl: "app/screen/html/main.html",
+       	  controller: "chatCtrl"
        })   
 
     //  $stateProvider
@@ -37,6 +37,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 app.config(['$mdThemingProvider',function($mdThemingProvider) {
 
   $mdThemingProvider.theme('default')
-    .primaryPalette('green')
-    .accentPalette('green');
+    .primaryPalette('red')
+    .accentPalette('red');
 }]);

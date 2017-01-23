@@ -6,7 +6,7 @@ var index = require('./routes/index');
 var api = require('./routes/api');
 
 var app = express();
-var port = 3002;
+var port = 3004;
 
 //view engine
 app.set('views', path.join(__dirname, 'ui'));
