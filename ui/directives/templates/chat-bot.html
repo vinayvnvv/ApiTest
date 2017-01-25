@@ -1,0 +1,30 @@
+<div class="chat">
+
+		<md-toolbar class="md-hue-2">
+		 <div class="md-toolbar-tools">
+		        <h2>
+		          <span class="title">Assistant</span>
+		        </h2>
+        </div>
+        </md-toolbar>
+
+
+
+
+		<div class="container" id="chat-scroller">
+				<li ng-repeat="m in msgs" class="msg {{m.by || 'bot'}}">{{m.msg}}</li>
+				<div ng-if="suggestion" ng-include="suggestion_template" class="sug-container"></div>
+		</div>
+
+		<div class='field'>
+            <input type="text" placeholder="Ask Me" ng-model="query" ng-keyup="bindQuery($event)" />
+        <md-button class="md-fab md-mini md-primary send-fab" aria-label="Use Android">
+          <md-icon style="color:#fff;line-height: .7;"><i class="material-icons" style="font-size: 15px">send</i></md-icon>
+        </md-button>
+
+		</div>
+
+
+
+
+</div>

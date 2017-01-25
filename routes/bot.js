@@ -7,15 +7,18 @@ console.log(db)
 
 
 router.get('/:id', function(req, res, next) {
-	// db.test.find(function(err, docs) {
- //          if(err) {
- //          	res.send(err);
- //          }
- //            res.json(docs);
+	var module_id = new mongo.ObjectID(req.params.id);
+	db.test.find({"_id": module_id},function(err, docs) {
+          if(err) {
+          	res.send(err);
+          }
 
-	// });
+          setTimeout(function(){ res.json(docs); }, 3000);
+            
 
-	 res.send('TASK API' + req.params.id);
+	});
+
+	// res.send('TASK API' + req.params.id);
 
 });
 
