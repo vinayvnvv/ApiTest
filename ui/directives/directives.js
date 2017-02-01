@@ -12,6 +12,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
              $scope.is_sub_info = false;
              $scope.sub_info_type = null;
              $scope.sub_info_data = null;
+             $scope.isTrack = false;
 
              
 
@@ -37,7 +38,8 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 			  console.log($scope.msgs);
 
 			  $scope.getModule = function (id) {
-                 var res = $http.get("http://127.0.0.1:3004/api/bot/" + id);
+			  	$scope.isTrack = true;
+                 var res = $http.get("http://127.0.0.1:3004/api/bot/module/" + id);
                  res.success(function(data) {
                  	console.log(data[0].module)
                  	$scope.popTypingMsg();
@@ -69,12 +71,33 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 
 			  		  		  $scope.getModule(b[i].call_module)	
 			  		  		}
+			  		  	} else { //tracking failed , changed state
+                           $scope.isTrack = false;
+                           $scope.getRecords(user_msg);
 			  		  	}
 			  		  }
 
 
 
 			  	}
+			  }
+
+			  $scope.getRecords = function (user_msg) {
+
+                 
+                 var data = { query: user_msg}; 	
+                 var res = $http.post("http://127.0.0.1:3004/api/bot/records",data);
+                 res.success(function(data) {
+                 	console.log(data)
+                 	$scope.popTypingMsg();
+                 	if(data) {
+                    $scope.msgs.push({by:"bot",msg:data});
+                     $scope.scrollToBottom();
+                 }
+                    console.log($scope.msgs)
+
+                 });
+
 			  }
 
 
@@ -195,13 +218,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 					   $scope.query = "";
 
 
-					  $timeout(function() {
-
-					  	
-					    $scope.pushTypingMsg();
-					
-
-					  }, 1000);
+					  
 
 
 					   //scrooll to bottom
@@ -227,10 +244,17 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 			  $scope.$watch('msgs', function (newValue, oldValue, scope) {
 			  	if($scope.msgs.length>0) {
                        if($scope.msgs[$scope.msgs.length-1].by == 'me') {
+					    
                           
-                           $scope.matchRegex($scope.msgs[$scope.msgs.length-1].msg);
+                          if($scope.isTrack) {
+                           	 $scope.matchRegex($scope.msgs[$scope.msgs.length-1].msg);
+                          }  else {
+                             $scope.getRecords($scope.msgs[$scope.msgs.length-1].msg);
+                           }
                             
-                        } 	
+                        }	 else {
+                        	$scope.popTypingMsg();
+                        }
                     }
 
                  }, true);

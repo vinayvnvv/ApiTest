@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,214 +6,44 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="google-signin-client_id" content="617965711227-ak9h08uuhefcbn6v5ccq8io3bdh401ml.apps.googleusercontent.com">
-  <title>Theming - Semantic</title>
+  <title>CHAt BOT</title>
 
-  <!--- Site CSS -->
-  <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-    <!-- <link rel="stylesheet" type="text/css" href="semantic/dist/components/dropdown.min.css"> -->
 
-  <!--- Component JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <!--- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="style/style.css">
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+
+
+  <!-- icons library -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <!--- Jquery-->
+
+  <!-- google sign in -->
   <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
- <!--  <script src="../assets/library/iframe-content.js"></script>
-  <script type="text/javascript" src="semantic/dist/components/popup.js"></script>
-  <script type="text/javascript" src="semantic/dist/components/dropdown.js"></script>
-  <script type="text/javascript" src="semantic/dist/components/transition.js"></script> -->
+ 
 
-  <!--- Show Names -->
-
-    <script src="semantic/dist/components/sidebar.min.js"></script>
-     <script src="semantic/dist/components/dropdown.min.js"></script>
-     <script src="semantic/dist/components/transition.min.js"></script>
-
-  <!--- Example CSS -->
-  <style>
-  body {
-    padding: 1em;
-  }
-  .ui.input + .ui.input {
-    margin-left: 1em;
-  }
-  </style>
-
+  <!-- Angular library -->
+  <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
 
 </head>
 
-<body class="minimal pushable">
+<body ng-app="mainApp" ng-controller="mainCtrl">
 
- <script>
-$(function(){
-    $("button").click(function(){
-        $(".ui.sidebar").sidebar('toggle');
-    });
-});
-
-  $(function() {
-  	$('#select')
-  .dropdown()
-;
-  });
-
-
-</script>
-<script>
-console.log("in")
-var params  = {
-client_id: '617965711227-ak9h08uuhefcbn6v5ccq8io3bdh401ml.apps.googleusercontent.com'
-// Additional optional params
-};
-// promise that would be resolved when gapi would be loaded
-var gapiPromise = (function(){
-	console.log("in-in")
-  var deferred = $.Deferred();
-  window.onLoadCallback = function(){
-  	console.log("in-in-in")
-    deferred.resolve(gapi);
-    console.log("gapi")
-  };
-  return deferred.promise()
-}());
-
-var authInited = gapiPromise.then(function(){
-  gapi.auth2.init({
-      client_id: '617965711227-ak9h08uuhefcbn6v5ccq8io3bdh401ml.apps.googleusercontent.com'
-    });
-})
-
-
-
-  gapiPromise.then(function(){
-    // will be executed after gapi is loaded
-    console.log("then")
-  });
-
-  authInited.then(function(){
-    // will be executed after gapi is loaded, and gapi.auth2.init was called
-  });
-
-
-</script>
-<script type="text/javascript">
- function onSuccess(googleUser) {
-      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-    }
-    function onFailure(error) {
-      console.log(error);
-    }
-
-
-function onSignIn(googleUser) {
-	console.log("hi")
-  var profile = googleUser.getBasicProfile();
-  console.log(profile);
-  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log('Name: ' + profile.getName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail());
-}
-
-   function renderButton() {
-      gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
-    }
-
-</script>
-  <div class="ui fixed menu">
-    <div class="ui container">
-			    <button class="ui basic icon button" style="box-shadow:none;">
-			  <i class="content icon" ></i>
-			</button>
-      <a href="#" class="header item">
-        <img class="logo" src="assets/images/logo.png">
-        Project Name
-      </a>
-      <a href="#" class="item">Home</a>
-      <div class="ui simple dropdown item">
-        Dropdown <i class="dropdown icon"></i>
-        <div class="menu">
-          <a class="item" href="#">Link Item</a>
-          <a class="item" href="#">Link Item</a>
-          <div class="divider"></div>
-          <div class="header">Header Item</div>
-          <div class="item">
-            <i class="dropdown icon"></i>
-            Sub Menu
-            <div class="menu">
-              <a class="item" href="#">Link Item</a>
-              <a class="item" href="#">Link Item</a>
-            </div>
-          </div>
-          <a class="item" href="#">Link Item</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <div class="ui visible sidebar" style="background: #fff;margin-top: 40px!important">
-  
-    <div class="ui fluid vertical menu" style="border-radius:0;">
-  <div class="item">
-    <div class="ui input"><input type="text" placeholder="Search..."></div>
-  </div>
-  <div class="item">
-    Home
-    <div class="menu">
-      <a class="active item">Search</a>
-      <a class="item">Add</a>
-      <a class="item">Remove</a>
-    </div>
-  </div>
-  <a class="item">
-    <i class="grid layout icon"></i> Browse
-  </a>
-  <a class="item">
-    Messages
-  </a>
-  <div class="ui dropdown item">
-    More
-    <i class="dropdown icon"></i>
-    <div class="menu">
-      <a class="item"><i class="edit icon"></i> Edit Profile</a>
-      <a class="item"><i class="globe icon"></i> Choose Language</a>
-      <a class="item"><i class="settings icon"></i> Account Settings</a>
-    </div>
-  </div>
-</div>
-
-  </div>
-  <div class="pusher fluid">
-
-  <div class="ui main container" style="margin-top: 50px">
-
-
-<div class="ui fluid mini action input">
-  <input type="text" placeholder="http://">
-  <select class="ui compact selection dropdown" id="select">
-    <option value="all">POST</option>
-    <option selected="" value="articles">GET</option>
-    <option value="products">PUT</option>
-  </select>
-  <div type="submit" class="ui primary button">SEND</div>
-</div>
-
-
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
-<!-- <div id="my-signin2"></div> -->
-
-  </div>
-  </div>
-
-
+<input type="text" ng-model="query" ng-keyup="exeQuery($event)"/>
+    
 
 
 </body>
+
+
+
+
+<!-- Application controllers -->
+
+<script type="text/javascript" src='test.js'></script>
+
+
 </html>
