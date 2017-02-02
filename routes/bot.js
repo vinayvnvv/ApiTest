@@ -1,15 +1,28 @@
 var express = require('express');
+var request = require("request");
 var MongoClient = require('mongodb').MongoClient;
 var router = express.Router();
 var mongo = require('mongojs');
 var db = mongo('mongodb://127.0.0.1:27017/test', ['test','records']); //var db = mongo('mongodb://vinaybv:gamapath@ds139288.mlab.com:39288/apitest', ['apitest']);
 var mdb = db;
 
+
+var table = require('./../class/tables');
+var Exe = require('./../class/exe');
+
 MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
 
 	mdb = db;
 
 	});
+
+
+  var action_table = table.action_table;
+  var action_type_table = table.action_type_table;
+  var greeting_table = table.greeting_table;
+  var concat_table = table.concat_table;
+  var extra_ch_table = table.extra_ch_table;
+
 
 
 
@@ -104,6 +117,64 @@ router.post("/records", function(req, res, next) {
 
 
 });
+
+ router.post("/module", function(req, res, next) {
+  console.log(res)
+  
+//init()
+
+var exe = new Exe([req,res,next])
+if(req.body.shortcut == undefined) {
+exe.initModule();
+} else {
+  exe.initShortcutModule();
+}
+
+// var data1 = {
+//   "password": "KRs4T",
+//   "username": "srinivasan.g@accionlabs.com"
+// };
+
+//   var options = {
+//   url: 'http://aic1.accionlabs.com/locallogin',
+//   method:"POST",
+//   form:data1
+
+// };
+ 
+// function callback(error, response, body) {
+  
+//   // console.log(response);
+//    //console.log(response);
+//    var token = response.headers['set-cookie'][0];
+//    token = token.slice(token.indexOf("=")+1).slice(0,token.indexOf(";"));
+//    token = token.slice(0,token.indexOf(";"));
+//    //res.send(token)
+//   // console.log(error);
+
+//   var options1 = {
+//   url: 'http://aic1.accionlabs.com/search',
+//   method:"GET",
+//   headers: {
+//     'Cookie': response.headers['set-cookie'] 
+//   }
+// };
+
+//    request(options1, callback1);
+
+//   function callback1(error, response, body) {
+
+//     res.json(response)
+//   }
+
+// }
+ 
+// request(options, callback);
+
+
+});
+
+
 
 
 module.exports = router;

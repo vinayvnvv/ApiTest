@@ -1,9 +1,11 @@
 var express = require('express');
+var cors = require('cors')
 var path = require('path');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var api = require('./routes/api');
+var helper = require('./class/my')
 
 var app = express();
 var port = 3004;
@@ -22,6 +24,8 @@ app.use(express.static(path.join(__dirname, 'ui')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(cors());
+
 app.use('/', index);
 app.use('/api', api);
 
@@ -39,4 +43,7 @@ app.route('/book')
 
 app.listen(port, function() {
 	console.log("connected with a port" + port);
+  var helper1 = new helper('James', 'Bond');
+
+   console.log(helper1.fullName());
 });

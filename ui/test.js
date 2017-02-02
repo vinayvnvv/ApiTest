@@ -1,17 +1,43 @@
 var app = angular.module("mainApp", []);
-app.controller('mainCtrl', ['$scope', function($s){
+app.controller('mainCtrl', ['$scope', '$http', function($s, $http){
+
+var data1 = {"msg":"what the phone of srini ?", "username":"srinivasan.g@accionlabs.com"};
+
+
+
+
+
+
+
+// var res = $http({method: "POST", url: 'http://aicstage.accionlabs.com/locallogin', 
+// 	headers: { 'withCredentials': 'false'} , params : data1 
+// });
+// res.then(function(val, s, h){
+// 	console.log(h);
+// })
+
+
+
+  var res = $http.post("http://localhost:3004/api/bot/module",  data1);
+  res.success(function(data, status, headers, config) {{
+      console.log(JSON.parse(data.body))
+  }});
+
 
 	console.log("called ctrl");
 	$s.action = null;
 	$s.action_type = null;
 
 
-	var action_table = {
+	var action_table	 = {
 	"action": [{
-		"matches": ["show", "display", "give", "what"],
+		"matches": ["show", "display", "give"],
 		"call_module": "123"
 	}, {
 		"matches": ["send", "forword"],
+		"call_module": "123"
+	},{
+		"matches": ["who", "does","where","which","what"],
 		"call_module": "123"
 	}]
 }
@@ -19,10 +45,10 @@ app.controller('mainCtrl', ['$scope', function($s){
 
   var action_type_table = {
 	"type": [{
-		"matches": ["users", "members"],
+		"matches": ["users", "members", "skills", "skill"],
 		"call_module": "123"
 	}, {
-		"matches": ["mail", "message", "sms"],
+		"matches": ["mail", "message", "sms", "phone", "email"],
 		"call_module": "123"
 	}]
 }
@@ -36,7 +62,7 @@ app.controller('mainCtrl', ['$scope', function($s){
   
 
   var concat_table = {
-	"content": [{
+	"concats": [{
 		"matches": ["to"],
 		"call_module": "123"
 	}, {
@@ -47,6 +73,24 @@ app.controller('mainCtrl', ['$scope', function($s){
 		"call_module": "123"
 	},{
 		"matches": ["of"],
+		"call_module": "123"
+	},{
+		"matches": ["in"],
+		"call_module": "123"
+	}, {
+		"matches": ["at"],
+		"call_module": "123"
+	}
+	]
+}
+
+var extra_ch_table = {
+	"extra": [{
+		"matches": ["is","at","are","the"],
+		"call_module": "123"
+	},
+	{
+		"matches": ["office","email","mail","phone", "works","work"],
 		"call_module": "123"
 	}
 	]
@@ -79,19 +123,34 @@ $s.findActionType = function() {
 	$s.action_type = null;
 	for(var i=0;i<action_type_table.type.length;i++) {
 		    if((type = containsAny($s.queryText,action_type_table.type[i].matches,true)) != null) {
-                 $s.action_type = type;
-
+                 $s.action_type = type.substring;
+                 $s.queryText = type.str;
+                 
                  return;
 		    }
 
 		    }
 }
 
+$s.findConcat = function() {
+	$s.concat = [];
+	for(var i=0;i<concat_table.concats.length;i++) {
+		    if((concat = mapConcat($s.queryText,concat_table.concats[i].matches)) != null) {
+                 if(concat != null ) {
+                 	$s.concat.push(concat.map);
+                 	$s.queryText = concat.str;
+                 }
+		    }
+
+		    }
+}
+
+
 
 function containsAny(str, strarray, remove) {
 	console.log(str + " - " + strarray + " - " + remove)
     for (var i = 0; i != strarray.length; i++) {
-       var substring = strarray[i];
+       var substring = strarray[i].toLowerCase();
        if ((at = str.indexOf(substring)) != - 1) {
        	console.log("enyeriung")
          if((str[at+substring.length] == ' ' || str[at+substring.length] == null) && (str[at-1] == ' ' || str[at-1] == null) ) {
@@ -117,16 +176,53 @@ function containsAny(str, strarray, remove) {
     return null; 
 }
 
+function mapConcat(str, strarray) {
+    for (var i = 0; i != strarray.length; i++) {
+       var ch = strarray[i];
+       var regex = new RegExp("(.*)(\\s" + ch + "\\s([a-z]*))", "i");
+       var match = str.match(regex);
+		       if(match!=null) {
+
+		       	str = str.replace(match[2],'');
+
+		       	 return {
+		       	 	map:{
+		       	 		map:ch,
+		       	 		value:match[3]
+		       	 	},
+		       	 	str:str
+		       	 }
+
+		          
+		    }
+       }
+       return null;
+}
+
+$s.removeExtra = function() {
+	for(var i=0;i<extra_ch_table.extra.length;i++) {
+		    if((type = containsAny($s.queryText,extra_ch_table.extra[i].matches,true)) != null) {
+                 $s.queryText = type.str;
+		    }
+
+		    }
+}
+
+
  $s.exeQuery = function(e) {
  	var code = (e.keyCode ? e.keyCode : e.which);
 					if(code == 13) { //Enter keycode
-                     $s.queryText = $s.query;
+                     $s.queryText = $s.query.replace(/\s\s+/g, ' ').toLowerCase(); // init by removing multiple spaces
 
 
                      $s.findAction();
                      $s.findActionType();
+                     $s.findConcat();
+                     $s.removeExtra();
                      console.log($s.action)
                      console.log($s.action_type)
+                     console.log($s.concat)
+                     console.log($s.queryText);
 
 
 

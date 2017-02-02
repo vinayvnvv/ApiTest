@@ -13,6 +13,8 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
              $scope.sub_info_type = null;
              $scope.sub_info_data = null;
              $scope.isTrack = false;
+             $scope.shortcut = false;
+             $scope.shortcutType = null;
 
              
 
@@ -38,8 +40,8 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 			  console.log($scope.msgs);
 
 			  $scope.getModule = function (id) {
-			  	$scope.isTrack = true;
-                 var res = $http.get("http://127.0.0.1:3004/api/bot/module/" + id);
+			  	//$scope.isTrack = true;
+                 var res = $http.get("http://127.0.0.1:3004/api/bot/module");
                  res.success(function(data) {
                  	console.log(data[0].module)
                  	$scope.popTypingMsg();
@@ -84,14 +86,33 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 
 			  $scope.getRecords = function (user_msg) {
 
+			  	
                  
-                 var data = { query: user_msg}; 	
-                 var res = $http.post("http://127.0.0.1:3004/api/bot/records",data);
+                 var data = { msg: user_msg}; 
+                 if($scope.shortcut) {
+                   data.shortcut = $scope.shortcutType;	
+                   data.userId = $scope.userId;
+               }
+                 var res = $http.post("http://localhost:3004/api/bot/module",data);
                  res.success(function(data) {
+
+
+                 	//reset flags
+			  	$scope.shortcut = false;
+                $scope.shortcutType = null;
+
+
+
                  	console.log(data)
                  	$scope.popTypingMsg();
                  	if(data) {
-                    $scope.msgs.push({by:"bot",msg:data});
+                    $scope.msgs.push({by:"bot",msg:data.module.msg});
+                     if(data.module.sub_info!=null) {
+                    	$scope.is_sub_info = true;
+                    	$scope.sub_info_type = data.module.type;
+                        $scope.sub_info_data = data.module.sub_info;
+                    	$scope.performSuggestion(data.module.type,data.module.sub_info);
+                   }
                      $scope.scrollToBottom();
                  }
                     console.log($scope.msgs)
@@ -115,6 +136,11 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
                   	$scope.suggestion_template = "directives/templates/list.html";
                   	$scope.suggestion = true;
                   	$scope.suggestionData = data.list;
+                  }
+                  if(type == 'user_card') {
+                  	$scope.suggestion_template = "directives/templates/user_card.html";
+                  	$scope.suggestion = true;
+                  	$scope.suggestionData = data;
                   }
 
 
@@ -194,6 +220,29 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 
             }
 
+             $scope.openUserInfoModule = function(obj) {
+             
+                $scope.shortcut = true;
+                $scope.shortcutType = "userInfo";
+                $scope.userId = obj.id;
+            	$scope.suggestion = false;
+            	$scope.user_msg.msg = obj.name;
+            	$scope.msgs.push({
+					   	   msg:obj.name,
+					   	   by:"me"
+					   });
+            	$timeout(function() {
+
+					  	
+					    $scope.pushTypingMsg();
+					
+
+					  }, 1000);
+
+            	
+
+            }
+
 
 
 			  $scope.bindQuery = function(e) {
@@ -249,6 +298,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
                           if($scope.isTrack) {
                            	 $scope.matchRegex($scope.msgs[$scope.msgs.length-1].msg);
                           }  else {
+                          	console.log("called")
                              $scope.getRecords($scope.msgs[$scope.msgs.length-1].msg);
                            }
                             
