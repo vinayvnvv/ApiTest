@@ -86,6 +86,8 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 
 			  $scope.getRecords = function (user_msg) {
 
+			  	console.log("called getRecords")
+
 			  	
                  
                  var data = { msg: user_msg}; 
@@ -106,6 +108,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
                  	console.log(data)
                  	$scope.popTypingMsg();
                  	if(data) {
+                 		console.log(data.module.msg)
                     $scope.msgs.push({by:"bot",msg:data.module.msg});
                      if(data.module.sub_info!=null) {
                     	$scope.is_sub_info = true;
@@ -137,7 +140,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
                   	$scope.suggestion = true;
                   	$scope.suggestionData = data.list;
                   }
-                  if(type == 'user_card') {
+                  if(type == 'user_list') {
                   	$scope.suggestion_template = "directives/templates/user_card.html";
                   	$scope.suggestion = true;
                   	$scope.suggestionData = data;
@@ -187,13 +190,13 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 					   	   msg:obj.name,
 					   	   by:"me"
 					   });
-            	$timeout(function() {
+       //      	$timeout(function() {
 
 					  	
-					    $scope.pushTypingMsg();
+					  //   $scope.pushTypingMsg();
 					
 
-					  }, 1000);
+					  // }, 1000);
 
             	
 
@@ -231,13 +234,13 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 					   	   msg:obj.name,
 					   	   by:"me"
 					   });
-            	$timeout(function() {
+       //      	$timeout(function() {
 
 					  	
-					    $scope.pushTypingMsg();
+					  //   $scope.pushTypingMsg();
 					
 
-					  }, 1000);
+					  // }, 1000);
 
             	
 

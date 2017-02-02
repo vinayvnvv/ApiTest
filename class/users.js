@@ -47,7 +47,7 @@ var Users = function(router) {
                    var r_ = {module:{
                                 msg:"Total " + a.profiles.length + " Results, Select which " + name + " you want!",
                                 sub_info:a.profiles,
-                                type:"user_card",
+                                type:"user_list",
                                 track:true
                    			}};
 				   router_res.json(r_)
@@ -98,10 +98,11 @@ var Users = function(router) {
 				   request(options1, callback1);
 
 				  function callback1(error, response, body) {
-                   var a = JSON.parse(body);
+                   var a = JSON.parse(response.body);
+                   console.log(a)
+                   a.msg_style = "user-info-card";
                    var r_ = {module:{
-                                msg:body,
-                                track:true
+                                msg:a
                    			}};
 				   router_res.json(r_)
 				  }

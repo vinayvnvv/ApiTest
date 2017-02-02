@@ -1,3 +1,4 @@
+
 <div class="chat">
 
 		<md-toolbar class="md-hue-2">
@@ -12,7 +13,9 @@
 
 
 		<div class="container" id="chat-scroller">
-				<li ng-repeat="m in msgs track by $index" class="msg {{m.by || 'bot'}}">{{m.msg}}</li>
+				<li ng-repeat="m in msgs track by $index" class="msg {{m.by || 'bot'}} {{m.msg.msg_style}}">
+				<ng-include src="'directives/templates/chat-msgs.html'"></ng-include>
+				</li>
 				<div ng-if="suggestion" ng-include="suggestion_template" class="sug-container"></div>
 		</div>
 
