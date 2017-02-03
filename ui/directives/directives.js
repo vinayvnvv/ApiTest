@@ -324,7 +324,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
 		link: function($scope, iElm, iAttrs, controller) {
           
 			  $scope.$watch('msgs', function (newValue, oldValue, scope) {
-			  	$timeout(function() {$scope.scrollToBottom();}, 10);
+			  	$timeout(function() {$scope.scrollToBottom();}, 100);
 			  	if($scope.msgs.length>0) {
                        if($scope.msgs[$scope.msgs.length-1].by == 'me') {
 					    
