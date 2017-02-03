@@ -1,4 +1,4 @@
-app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $timeout, $rootScope){
+app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function($http, $timeout, $rootScope, Parser){
 	// Runs during compile
 	return {
 		// name: '',
@@ -6,6 +6,8 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 		// terminal: true,
 		// scope: {}, // {} = isolate, true = child, false/undefined = no change
 	    controller: function($scope, $element, $attrs, $transclude) {
+
+	    	 
 
 
              $scope.msgs = [];
@@ -45,6 +47,10 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
                  res.success(function(data) {
                  	console.log(data[0].module)
                  	$scope.popTypingMsg();
+                 	//parser the msg before push
+
+		            
+
                     $scope.msgs.push(data[0].module)
                     if(data[0].module.sub_info!=null)
                     	$scope.is_sub_info = true;
@@ -120,14 +126,15 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
                  var res = $http.post("http://localhost:3004/api/bot/module",data);
                  res.success(function(data) {
 
+                 	console.log(typeof (data.module.msg))
+                 	if((typeof data.module.msg) == "string")
+                 			data.module.msg = Parser.parseMsg(data.module.msg);
+
 
                  	//reset flags
 			  	$scope.shortcut = false;
                 $scope.shortcutType = null;
 
-
-
-                 	console.log(data)
                  	$scope.popTypingMsg();
                  	if(data) {
                  		console.log(data.module.msg)
@@ -304,7 +311,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 
 
   				//call init module
-  				$scope.getModule("588852f155488f5883cd9f63");
+  				//$scope.getModule("588852f155488f5883cd9f63");
   				$timeout(function() {$scope.initBot();}, 1000);
 	    },
 		// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements

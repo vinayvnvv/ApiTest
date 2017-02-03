@@ -40,16 +40,23 @@ var Parser = function () {
 
 
 
-
-    this.containsAny = function(str, strarray, remove , force_to_loop) {
+    /* parameters
+              str : query to match
+              strarray : array of words to match with queries
+              force to loop : check all the word matches
+              trim_both : match only words
+              remove : remove word if matches
+    */
+    this.containsAny = function(str, strarray, remove , force_to_loop, trim_both) {
     	if(force_to_loop == undefined) force_to_loop = false;
+    	if(trim_both == undefined) trim_both = false;
 		  console.log(str + " - " + strarray + " - " + remove)
 		    for (var i = 0; i != strarray.length; i++) {
 		       var substring = strarray[i].toLowerCase();
 		       if ((at = str.indexOf(substring)) != - 1) {
 		        console.log("enyeriung")
 		         if((str[at-1] == ' ' || str[at-1] == null) ) {  //removed cond  = str[at+substring.length] == ' ' || str[at+substring.length] == null) && 
-		           
+		            if(trim_both){ if(!(str[at+substring.length] == ' ' || str[at+substring.length] == null)) continue;}   //check for word only
 		            if(remove) {
 				              console.log("enering remove  at:" + at)
 				              var res1 = str.substring(0,at-1);
@@ -79,7 +86,7 @@ var Parser = function () {
 
 		this.removeExtra = function(string) {
 				  for(var i=0;i<extra_ch_table.extra.length;i++) {
-				        if((type = this.containsAny(string,extra_ch_table.extra[i].matches,true,true)) != null) {
+				        if((type = this.containsAny(string,extra_ch_table.extra[i].matches,true,true,true)) != null) {
 				                 string = type.str;
 				        }
 
@@ -116,8 +123,8 @@ var Parser = function () {
 			        if((greet = this.containsAny(qText,greeting_table.greetings[i].matches,true)) != null) {
 			                 greetText = greet.substring;
 			                 qText = greet.str;
-			                 
-			                 return {greetText:greetText,q:qText};
+			                 var rand_gt = greeting_table.greetings[i].resMsg[this.getRandomInt(0,greeting_table.greetings[i].resMsg.length-1)]
+			                 return {greetText:rand_gt,q:qText};
 			        }
 
 			        }
@@ -157,6 +164,11 @@ var Parser = function () {
 		    return qText.trim().match(/([a-z])*/)[0];
 		   
 		}
+
+		this.getRandomInt = function(min, max) {
+   			 return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
 
 
 

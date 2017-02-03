@@ -64,7 +64,7 @@ var Exe = function(router) {
           
              var p_ = parser.findGreetingTable(query);
                                     if(p_!=null) {
-                                       this.res.json({module:{id:1,msg:"Greeting:" + p_.greetText}});
+                                       this.res.json({module:{id:1,msg:p_.greetText}});
                                        return true;
                                     } else {
                                        return false;

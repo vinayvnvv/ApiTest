@@ -28,7 +28,7 @@ module.exports = {
     "matches": ["mail", "message", "sms", "phone", "email"],
     "call_module": "123"
   }, {
-    "matches": ["works", "working", "work"],
+    "matches": ["works", "working", "work","sit","sits","sitting"],
     "call_module": "123"
   }]
 },
@@ -36,11 +36,26 @@ module.exports = {
   greeting_table : {
   "greetings": [{
     "matches": ["hi","hello", "Hey", "whatsupp", "whatsapp", "namaskara"],
-    "replace": ["Hi!", "Hello ! Glad to see You!", "Hello , How can i Help You?"],
+    "resMsg": ["Hi!", "Hello ! Glad to see You!", "Hello , How can i Help You?"],
     "call_module": "123"
   },{
-    "matches": ["how are you","how a you", "what about you", "How are you feeling"],
-    "replace": ["I am Good!", "Fine! How can i help You"],
+    "matches": ["how are you","how a you", "what about you", "How are you feeling", "hw r u", "how r you","how are u", "hw are you", "how You", "how r u"],
+    "resMsg": ["I am Good!", "Fine! How can i help You","I'm having a great day"],
+    "call_module": "123"
+  },
+  {
+    "matches": ["Good morning","good afternoon", "good evening", "good night", "good noon", "morning","afternoon", "evening", "night", "nice morning"],
+    "resMsg": ["Hello ! Good [[daystate]]", "hi, Good [[daystate]]"],
+    "call_module": "123"
+  },
+   {
+    "matches": ["Bye","see you", "see u"],
+    "resMsg": ["Good Bye!", "Okay Bye!, have a wonderfull day", "See You!"],
+    "call_module": "123"
+  },
+  {
+    "matches": ["okay", "ok"],
+    "resMsg": ["Ok"],
     "call_module": "123"
   }]
 },
@@ -78,7 +93,7 @@ module.exports = {
 
  extra_ch_table : {
   "extra": [{
-    "matches": ["is","at","are","the","does","were","work","office","working","work", "?"],
+    "matches": ["is","at","are","the","does","were","work","office","working","work", "?", "an", "a"],
     "call_module": "123"
   }
   ]
