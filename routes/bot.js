@@ -119,7 +119,7 @@ router.post("/records", function(req, res, next) {
 });
 
  router.post("/module", function(req, res, next) {
-  console.log(res)
+
   
 //init()
 

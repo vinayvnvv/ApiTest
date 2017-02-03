@@ -23,6 +23,10 @@ var Exe = function(router) {
                                     
                                     // this.res.send($s.action_type)
 
+                                    if(this.checkGreeting($s.queryText))
+                                       return;
+
+                                    console.log("entering next line")
                                     var p_ = parser.findAction($s.queryText);
                                     $s.action = p_.act;
                                     $s.queryText = p_.q;
@@ -33,7 +37,7 @@ var Exe = function(router) {
                                     if(p_!=null) {
                                     $s.action_type = p_.act_type;
                                     $s.queryText = p_.q;
-                                 }
+                                  }
 
 
                                     p_ = parser.findConcat($s.queryText);
@@ -53,6 +57,18 @@ var Exe = function(router) {
                                     $s.last_str = parser.forceExtractQuery($s.queryText)
 
                                     this.startChecking();
+
+         }
+
+          this.checkGreeting = function(query) {
+          
+             var p_ = parser.findGreetingTable(query);
+                                    if(p_!=null) {
+                                       this.res.json({module:{id:1,msg:"Greeting:" + p_.greetText}});
+                                       return true;
+                                    } else {
+                                       return false;
+                                    }
 
          }
 

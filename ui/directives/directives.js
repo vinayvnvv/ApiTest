@@ -54,6 +54,28 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
                  });
 			  }
 
+              $scope.initBot = function() {
+              	var m_ = {
+              		by:"bot",
+              		msg:"Welcome! I am Your Assistant, How can I Help You?",
+              		type:"option",
+              		sub_info:{
+              			option:[
+              			      {
+              			      	name:"who ramesh?",
+              			      },
+              			      {
+              			      	name:"Hello"
+              			      }
+              			  ]
+              		}
+              	}
+              	$scope.msgs.push(m_);
+              			$scope.is_sub_info = true;
+                    	$scope.sub_info_type = m_.type;
+                        $scope.sub_info_data = m_.sub_info;
+                    	$scope.performSuggestion(m_.type,m_.sub_info);
+              }
 
 			  $scope.matchRegex = function(user_msg) {
 
@@ -283,6 +305,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 
   				//call init module
   				$scope.getModule("588852f155488f5883cd9f63");
+  				$timeout(function() {$scope.initBot();}, 1000);
 	    },
 		// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
 		// restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
@@ -294,6 +317,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', function($http, $ti
 		link: function($scope, iElm, iAttrs, controller) {
           
 			  $scope.$watch('msgs', function (newValue, oldValue, scope) {
+			  	$timeout(function() {$scope.scrollToBottom();}, 10);
 			  	if($scope.msgs.length>0) {
                        if($scope.msgs[$scope.msgs.length-1].by == 'me') {
 					    

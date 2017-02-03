@@ -35,7 +35,12 @@ module.exports = {
 
   greeting_table : {
   "greetings": [{
-    "matches": ["hi", "how are you"],
+    "matches": ["hi","hello", "Hey", "whatsupp", "whatsapp", "namaskara"],
+    "replace": ["Hi!", "Hello ! Glad to see You!", "Hello , How can i Help You?"],
+    "call_module": "123"
+  },{
+    "matches": ["how are you","how a you", "what about you", "How are you feeling"],
+    "replace": ["I am Good!", "Fine! How can i help You"],
     "call_module": "123"
   }]
 },

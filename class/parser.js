@@ -100,7 +100,7 @@ var Parser = function () {
 
 
 			    for(var i=0;i<action_table.action.length;i++) {
-			        if((act = this.containsAny(firstWord,action_table.action[i].matches,false)) != null) {
+			        if((act = this.containsAny(qText,action_table.action[i].matches,false)) != null) {
 			                 action = act;
 			                 var regex = new RegExp(act, "i");
 			          		 qText = qText.replace(regex,"");
@@ -109,6 +109,18 @@ var Parser = function () {
 
 			        }
    
+		}
+
+		this.findGreetingTable = function(qText) {
+			  for(var i=0;i<greeting_table.greetings.length;i++) {
+			        if((greet = this.containsAny(qText,greeting_table.greetings[i].matches,true)) != null) {
+			                 greetText = greet.substring;
+			                 qText = greet.str;
+			                 
+			                 return {greetText:greetText,q:qText};
+			        }
+
+			        }
 		}
 
 		this.findActionType = function(qText) {
