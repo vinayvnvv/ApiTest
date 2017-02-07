@@ -29,9 +29,13 @@ module.exports = {
     "call_module": "123"
   }, {
     "matches": ["works", "working", "work","sit","sits","sitting"],
-    "call_module": "123"
+    "call_module": "123",
+    "type_of_match":"work"
   }]
 },
+
+  
+
 
   greeting_table : {
   "greetings": [{
@@ -51,13 +55,15 @@ module.exports = {
    {
     "matches": ["Bye","see you", "see u"],
     "resMsg": ["Good Bye!", "Okay Bye!, have a wonderfull day", "See You!"],
-    "call_module": "123"
+    "call_module": "123",
+    "is_quote":true
   },
   {
     "matches": ["okay", "ok"],
     "resMsg": ["Ok"],
     "call_module": "123"
-  }]
+  }
+  ]
 },
   
 
@@ -88,12 +94,16 @@ module.exports = {
     "call_module": "123"
   }
 
-  ]
+  ] 
 },
 
  extra_ch_table : {
   "extra": [{
-    "matches": ["is","at","are","the","does","were","work","office","working","work", "?", "an", "a"],
+    "matches": ["is","at","are","the","does","were","work","office","working","work", "an", "a","in","say", "me","adress","address"],
+    "call_module": "123"
+  },
+  {
+    "matches": ["?"],
     "call_module": "123"
   }
   ]

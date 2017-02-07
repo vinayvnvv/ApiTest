@@ -125,9 +125,11 @@ router.post("/records", function(req, res, next) {
 
 var exe = new Exe([req,res,next])
 if(req.body.shortcut == undefined) {
-exe.initModule();
+  setTimeout(function() {exe.initModule();}, 1500);
+
 } else {
-  exe.initShortcutModule();
+  setTimeout(function() { exe.initShortcutModule(); }, 1500);
+  
 }
 
 // var data1 = {

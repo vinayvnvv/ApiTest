@@ -1,10 +1,10 @@
-app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function($http, $timeout, $rootScope, Parser){
+app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile', function($http, $timeout, $rootScope, Parser, $compile){
 	// Runs during compile
 	return {
 		// name: '',
 		// priority: 1,
 		// terminal: true,
-		// scope: {}, // {} = isolate, true = child, false/undefined = no change
+		scope: {}, // {} = isolate, true = child, false/undefined = no change
 	    controller: function($scope, $element, $attrs, $transclude) {
 
 	    	 
@@ -21,10 +21,14 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
              
 
 
-              //init vars
-              $scope.isTypingMsg = false;  //flag to check typing msg is already exists 
-			  $rootScope.chat_scroller = document.getElementById("chat-scroller");
-			  $rootScope.chat_scroller_ele = (angular.element($scope.chat_scroller));
+     //          //init vars
+     //          $scope.isTypingMsg = false;  //flag to check typing msg is already exists 
+			  // $rootScope.chat_scroller = document.getElementById("chat-scroller");
+			  // $rootScope.chat_scroller_ele = (angular.element($scope.chat_scroller));
+
+
+
+			  $scope.chat_scroller = angular.element($element["0"].children["0"].children.item(1));
 
 			  $scope.user_msg =  {
 					   	   msg:null,
@@ -76,6 +80,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
               			  ]
               		}
               	}
+              	$scope.playSound("bot");
               	$scope.msgs.push(m_);
               			$scope.is_sub_info = true;
                     	$scope.sub_info_type = m_.type;
@@ -126,6 +131,9 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
                  var res = $http.post("http://localhost:3004/api/bot/module",data);
                  res.success(function(data) {
 
+                 	//play bot sound
+                 	$scope.playSound("bot")
+
                  	console.log(typeof (data.module.msg))
                  	if((typeof data.module.msg) == "string")
                  			data.module.msg = Parser.parseMsg(data.module.msg);
@@ -137,20 +145,60 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
 
                  	$scope.popTypingMsg();
                  	if(data) {
-                 		console.log(data.module.msg)
+                 	console.log(data.module.msg)
+
+                 	//check msgs to display before pushing original msgs
+                 	$scope.checkBeforePushMsgs(data.module);
+
                     $scope.msgs.push({by:"bot",msg:data.module.msg});
                      if(data.module.sub_info!=null) {
-                    	$scope.is_sub_info = true;
-                    	$scope.sub_info_type = data.module.type;
-                        $scope.sub_info_data = data.module.sub_info;
-                    	$scope.performSuggestion(data.module.type,data.module.sub_info);
+                     	$scope.checkSubInfo(data.module);
                    }
-                     $scope.scrollToBottom();
+                     
                  }
                     console.log($scope.msgs)
 
+                    //check msgs to display after pushing original msgs
+                 	$scope.checkAfterPushMsgs(data.module);
+
+
                  });
 
+
+                 
+
+
+
+             }
+
+
+             $scope.checkSubInfo = function(data) {
+             		    $scope.is_sub_info = true;
+                    	$scope.sub_info_type = data.type;
+                        $scope.sub_info_data = data.sub_info;
+                    	$scope.performSuggestion(data.type,data.sub_info);
+                    	$scope.scrollToBottom();
+             }
+
+			  $scope.checkAfterPushMsgs = function(data) {
+			  	if(data.afterMsg != null) {
+			  		for(var i=0;i<data.afterMsg.length;i++) {
+			  			$scope.msgs.push({by:"bot", msg:data.afterMsg[i].msg})
+					  			if(data.afterMsg[i].sub_info!=null) {
+		                     		$scope.checkSubInfo(data.afterMsg[i]);
+		                       }
+			  		}
+			  	}
+			  }
+
+
+			  $scope.checkBeforePushMsgs = function(data) {
+			  	console.log(data.beforeMsg)
+			  	if(data.beforeMsg != null) {
+			  		for(var i=0;i<data.beforeMsg.length;i++) {
+			  			$scope.msgs.push({by:"bot", msg:data.beforeMsg[i].msg})
+			  		}
+			  	}
 			  }
 
 
@@ -180,33 +228,19 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
 
 			  $scope.pushTypingMsg = function() {
 
-			  	 //add typing div
-					   // $rootScope.chat_scroller_ele.append($scope.typing)
-					   //  $scope.chat_scroller.scrollTop = ($scope.chat_scroller.scrollHeight + 20);
-
-                 if(!$scope.isTypingMsg) {
-				  	 $scope.msgs.push({msg:"Getting Help..", mode:"typing"});
-				     $scope.scrollToBottom();
-				     $scope.isTypingMsg = true;
-			   }
+			  	 $scope.typing = "block";
 			  	
 			  }
 
 			  $scope.popTypingMsg = function() {
 
-			  	 //remove typing div id if exists
-			  	 if($scope.isTypingMsg) {
-			            if($scope.msgs[$scope.msgs.length-1].mode == "typing") {
-			            	$scope.msgs.pop();
-			            	$scope.isTypingMsg = false;
-			            }
-			  	 }
+			  	$scope.typing = "none";
 
 			  }
 
 
 			  $scope.scrollToBottom = function() {
-			  	$scope.chat_scroller.scrollTop = ($scope.chat_scroller.scrollHeight + 20);
+			  	$scope.chat_scroller[0].scrollTop = ($scope.chat_scroller[0].scrollHeight + 20);
 			  }
 
 
@@ -240,13 +274,13 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
 					   	   msg:obj.name,
 					   	   by:"me"
 					   });
-            	$timeout(function() {
+       //      	$timeout(function() {
 
 					  	
-					    $scope.pushTypingMsg();
+					  //   $scope.pushTypingMsg();
 					
 
-					  }, 1000);
+					  // }, 1000);
 
             	
 
@@ -263,6 +297,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
 					   	   msg:obj.name,
 					   	   by:"me"
 					   });
+            	
        //      	$timeout(function() {
 
 					  	
@@ -275,6 +310,16 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
 
             }
 
+
+            $scope.playSound = function (who) {
+            	if(who == "user") {
+	            	var audio = new Audio('sound/user.mp3');
+					audio.play();
+				} else {
+					var audio = new Audio('sound/bot.mp3');
+					audio.play();
+				}
+            }
 
 
 			  $scope.bindQuery = function(e) {
@@ -302,9 +347,6 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
 					  
 
 
-					   //scrooll to bottom
-					   console.log($scope.chat_scroller.scrollHeight)
-			           $scope.scrollToBottom();
 					}
   				}
 
@@ -322,11 +364,20 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
 		// transclude: true,
 		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
 		link: function($scope, iElm, iAttrs, controller) {
+
+			 $scope.custom_parent_style = iAttrs.customParentStyle;
+			 $scope.chat_custom_height = "height:" + iAttrs.customHeight + "px";
+			 $scope.scroller_custom_height = "height:" + (parseInt(iAttrs.customHeight)-105) + "px";
           
 			  $scope.$watch('msgs', function (newValue, oldValue, scope) {
+
+
 			  	$timeout(function() {$scope.scrollToBottom();}, 100);
 			  	if($scope.msgs.length>0) {
                        if($scope.msgs[$scope.msgs.length-1].by == 'me') {
+
+
+                       	$scope.playSound("user");
 					    
                           
                           if($scope.isTrack) {
@@ -335,6 +386,8 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', function(
                           	console.log("called")
                              $scope.getRecords($scope.msgs[$scope.msgs.length-1].msg);
                            }
+
+                           $timeout(function() {$scope.pushTypingMsg();}, 1100); 
                             
                         }	 else {
                         	$scope.popTypingMsg();

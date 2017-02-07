@@ -1,3 +1,5 @@
+var request = require("request");
+var rp = require('request-promise');
 var parser_ = require('./../class/parser');
 var Users = require('./users')
 var parser = new parser_();
@@ -7,6 +9,7 @@ var Exe = function(router) {
    this.req = router[0];
    this.res = router[1];
    this.next = router[2];
+   var routerRes = this.res;
    this.users = new Users(router);
    var $s = {
       action:null,
@@ -28,14 +31,18 @@ var Exe = function(router) {
 
                                     console.log("entering next line")
                                     var p_ = parser.findAction($s.queryText);
+                                    if(p_!=null) {
                                     $s.action = p_.act;
                                     $s.queryText = p_.q;
                                     $s.res_case = p_.res_case;
+                                 }
 
 
                                     p_ = parser.findActionType($s.queryText);
                                     if(p_!=null) {
                                     $s.action_type = p_.act_type;
+                                    $s.action_type_of_match = p_.type_of_match;
+                                    console.log("type of mtch:" + $s.action_type_of_match)
                                     $s.queryText = p_.q;
                                   }
 
@@ -55,6 +62,7 @@ var Exe = function(router) {
                                     console.log($s.queryText);
 
                                     $s.last_str = parser.forceExtractQuery($s.queryText)
+                                    console.log("filter for: " + $s.last_str)
 
                                     this.startChecking();
 
@@ -64,7 +72,26 @@ var Exe = function(router) {
           
              var p_ = parser.findGreetingTable(query);
                                     if(p_!=null) {
-                                       this.res.json({module:{id:1,msg:p_.greetText}});
+                                      console.log("quote enable:" + p_.is_quote)
+                                      if(p_.is_quote == true)  {//send random bye quote
+
+                                         rp("http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=").then(function(res){
+                                         // console.log(res);
+                                          var aftr = [{msg:"i have a quote for You : "},{msg:JSON.parse(res)[0].content}, {msg:"by - " + JSON.parse(res)[0].title}];
+                                          routerRes.json({module:{id:1,msg:p_.greetText,afterMsg:aftr}});
+                                       })   
+                                       
+                                       
+                                      } else {
+                                         this.res.json({module:{id:1,msg:p_.greetText}});
+                                      } 
+
+
+
+
+
+
+
                                        return true;
                                     } else {
                                        return false;
@@ -100,13 +127,53 @@ var Exe = function(router) {
 
             } else {
 
-            if($s.res_case == "question") {
-                  this.res.send("Question : type=" + $s.action_type + ",filter:" + $s.last_str)
+               if($s.action_type_of_match == 'work') {
 
-                } else if($s.res_case == "yesorno") {
-                  this.res.send("yes or no :type=" + $s.action_type + ",filter:" + $s.last_str)
 
-                }
+
+
+
+                   var res_ = this.users.fetchUsersList($s.last_str);
+                  // var dd = this.users.Test(this.res);
+                   
+                   res_.then(function(res__) {
+                              
+
+                               var a = JSON.parse(res__);
+                                  if(a.profiles.length == 0) {
+                                             var r_ = {module:{
+                                                        msg:"Sorry ! No user with specified name!!"
+                                                }};
+                                   router_res.json(r_)
+
+                                    } else {
+                                           var r_ = {module:{
+                                                        msg:"Which " + $s.last_str + " you are asking About?  ",
+                                                        sub_info:a.profiles,
+                                                        type:"user_list",
+                                                        track:false
+                                                }};
+                                   routerRes.json(r_)
+                                 }
+
+                       
+
+                   });
+                   res_.catch(function(res) {
+                      console.log(res)
+                   });
+                   console.log("data__")
+
+                   
+               }
+
+            // if($s.res_case == "question") {
+            //       //this.res.send("Question : type=" + $s.action_type + ",filter:" + $s.last_str)
+
+            //     } else if($s.res_case == "yesorno") {
+            //       //this.res.send("yes or no :type=" + $s.action_type + ",filter:" + $s.last_str)
+
+            //     }
 
             }
          }

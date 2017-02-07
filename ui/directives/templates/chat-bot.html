@@ -1,5 +1,5 @@
 
-<div class="chat">
+<div class="chat" style="{{custom_parent_style}};{{chat_custom_height}}">
 
 		<md-toolbar class="md-hue-2">
 		 <div class="md-toolbar-tools">
@@ -12,12 +12,13 @@
 
 
 
-		<div class="container" id="chat-scroller">
+		<chat-scroller class="container" chat-scroller style="{{scroller_custom_height}}">
 				<li ng-repeat="m in msgs track by $index" class="msg {{m.by || 'bot'}} {{m.msg.msg_style}}">
 				<ng-include src="'directives/templates/chat-msgs.html'"></ng-include>
 				</li>
 				<div ng-if="suggestion" ng-include="suggestion_template" class="sug-container"></div>
-		</div>
+				<div style="display:{{typing}}" class="msg bot typing">...</div>
+		</chat-scroller>
 
 		<div class='field'>
             <input type="text" placeholder="Ask Me" ng-model="query" ng-keyup="bindQuery($event)" />

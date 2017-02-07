@@ -28,6 +28,7 @@
   padding: 4px;
   overflow-y: auto;
   padding-bottom: 35px;
+  display: block;
 }
 .chat .container .msg {
   border-radius: 10px;
@@ -44,7 +45,7 @@
   float: right;
 }
 .chat .container .msg.bot {
-  background-color: #F44336;
+  bbackground-color: #F44336;
   color:#fff;
   float: left;
 }
@@ -66,7 +67,7 @@
   position: absolute;
   z-index: 3;
   right:0;
-  bottom: -6px;
+  bottom: -4px;
   width: 30px;
   height: 30px;
   min-height: 30px;
@@ -233,7 +234,7 @@
     padding:17px  6px;
     border-radius: 1px;
     border: 1px solid #d9d9d9;
-    box-shadow: 1px 1px 1px 1px #d9d9d9;
+    box-shadow: 0.2px 2px 6px 0.5px #d9d9d9;
 }
 
  .chat .container .msg.bot.user-info-card .pic { 
@@ -247,6 +248,11 @@
   .chat .container .msg.bot.user-info-card .details-list { 
   padding:2px;
   text-align: center; 
+  }
+   .chat .container .msg.bot.user-info-card i {
+    position: relative;
+    font-size: 13px;
+    top: 2px;
   }
   .chat .container .msg.bot.user-info-card .actions { 
   padding:2px;
@@ -263,3 +269,50 @@
    color:#666;
 
 }
+
+.chat .container .msg.bot.user-info-card .ph-no {
+    position: relative;
+    top: -17px;
+    background: #fff;
+    max-width: 70%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    left: -6px;
+    border-radius: 0 0 5px 0;
+    font-size: 11px;
+    height: 17px;
+    line-height: 1.7;
+    letter-spacing: 0.5px;
+    border: 1px solid #d9d9d9;
+    border-left: 0;
+    border-top: 0;
+    box-shadow: 1px 1px 1px 1px #f0f0f0;
+    overflow: hidden;
+ }
+
+ .chat .container .msg.bot.user-info-card .ph-no i {
+    font-size: 12px;
+    top: 2px;
+    position: relative;
+    margin-left: 2px
+ }
+.chat .typing {
+   width:auto!important;
+   float:left;
+   display: block;  
+   animation: bounce 1.2s infinite;
+}
+
+  @-webkit-keyframes bounce { 
+            0%, 20%, 50%, 80%, 100% {-webkit-transform: translateX(0);} 
+            40% {-webkit-transform: translateX(14px);} 
+            60% {-webkit-transform: translateX(11px);} 
+            80% {-webkit-transform: translateX(7px);} 
+         } 
+         
+         @keyframes bounce { 
+            0%, 20%, 50%, 80%, 100% {transform: translateX(0);} 
+            40% {transform: translateX(14px);} 
+            60% {transform: translateX(11px);} 
+            80% {-webkit-transform: translateX(7px);} 
+         }

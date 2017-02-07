@@ -15,19 +15,51 @@ var Parser = function () {
     }
 
 
+    this.mapConcatLong = function(str) {
+
+    	var matches = extra_ch_table.extra[0].matches;
+
+    	for(var i=0;i<matches.length;i++) {
+    		var ch = matches[i];
+    		console.log("current ch" + ch);
+
+	        var regex = new RegExp("(.*)\\s" + ch + "[\\s?](.*)", "i");
+	        var match = str.match(regex);
+	        if(match!=null) {
+	        	console.log(match)
+	        	console.log("str:" + str + ",ch:" + ch)
+	        	console.log("matched:" + match[1]);
+	        	console.log("remain matched: " + ch + " " + match[2])
+	        	return{
+	        		str:" " + ch + " " + match[2],
+	        		match:match[1]
+	        	}
+	        } 
+    	}
+
+
+	        	return{
+	        		str:'',
+	        		match:this.forceExtractQuery(str)	
+	        	}
+
+    }
+
     this.mapConcat = function (str, strarray) {
     for (var i = 0; i != strarray.length; i++) {
        var ch = strarray[i];
-       var regex = new RegExp("(.*)(\\s" + ch + "\\s([a-z]*))", "i");
+       var regex = new RegExp("(.*)(\\s" + ch + "\\s([a-z]*)(.*))", "i");
        var match = str.match(regex);
            if(match!=null) {
 
-            str = str.replace(match[2],'');
+            console.log("match 4:" + match[4])
+            var str__ = this.mapConcatLong(match[4]);
+            str = str.replace(match[2],'') + str__.str;
 
              return {
               map:{
                 type:ch,
-                value:match[3]
+                value:match[3] + str__.match
               },
               str:str
              }
@@ -123,8 +155,9 @@ var Parser = function () {
 			        if((greet = this.containsAny(qText,greeting_table.greetings[i].matches,true)) != null) {
 			                 greetText = greet.substring;
 			                 qText = greet.str;
+			                 var is_quote = greeting_table.greetings[i].is_quote;
 			                 var rand_gt = greeting_table.greetings[i].resMsg[this.getRandomInt(0,greeting_table.greetings[i].resMsg.length-1)]
-			                 return {greetText:rand_gt,q:qText};
+			                 return {greetText:rand_gt,q:qText,is_quote:is_quote};
 			        }
 
 			        }
@@ -137,7 +170,7 @@ var Parser = function () {
 			                 action_type = type.substring;
 			                 qText = type.str;
 			                 
-			                 return {act_type:action_type,q:qText};
+			                 return {act_type:action_type,q:qText,type_of_match:action_type_table.type[i].type_of_match};
 			        }
 
 			        }
@@ -151,6 +184,7 @@ var Parser = function () {
 			                 if(concat != null ) {
 			                  concat_.push(concat.map);
 			                  qText = concat.str;
+
 			                 }
 			        }
 
@@ -161,7 +195,7 @@ var Parser = function () {
 
 		this.forceExtractQuery = function (qText) {
 
-		    return qText.trim().match(/([a-z])*/)[0];
+		    return qText.trim().match(/([a-z\s])*/)[0];
 		   
 		}
 

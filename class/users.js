@@ -1,5 +1,9 @@
 
 var request = require("request");
+var rp = require('request-promise');
+var Auth = require('./auth_info')
+
+var auth = new Auth();
 
 var Users = function(router) {
    var router_req = router[0];
@@ -7,55 +11,43 @@ var Users = function(router) {
    var router_next = router[2];
 
     this.getUsers = function(params, name) {
-       // console.log(this.res)
-        console.log(name)
 
-			 var data1 = {
-				  "password": "KRs4T",
-				  "username": "srinivasan.g@accionlabs.com"
-				};
 
-			 var options = {
-				  url: 'http://aic1.accionlabs.com/locallogin',
-				  method:"POST",
-				  form:data1
+    	var res_ = auth.getAuth();
+    	res_.then(function(response) {
 
-				};
-				 
-			 function callback(error, response, body) {
-				  
-				  // console.log(response);
-				   //console.log(response);
-				   var token = response.headers['set-cookie'][0];
-				   token = token.slice(token.indexOf("=")+1).slice(0,token.indexOf(";"));
-				   token = token.slice(0,token.indexOf(";"));
-				   //res.send(token)
-				  // console.log(error);
-
-				  var options1 = {
+    		  var options1 = {
 				  url: 'http://aic1.accionlabs.com/search?searchTxt='+name,
 				  method:"GET",
 				  headers: {
-				    'Cookie': response.headers['set-cookie'] 
+				    'Cookie': res_.response.caseless.dict['set-cookie']
 				  }
 				};
 
-				   request(options1, callback1);
+				var res__ = rp(options1) ;
+				res__.then(function(response) {
+                   var a = JSON.parse(response);
+                   if(a.profiles.length == 0) {
+                   	     var r_ = {module:{
+		                                msg:"Sorry ! No user with specified name!!"
+		                   			}};
+						   router_res.json(r_)
 
-				  function callback1(error, response, body) {
-                   var a = JSON.parse(body);
-                   var r_ = {module:{
-                                msg:"Total " + a.profiles.length + " Results, Select which " + name + " you want!",
-                                sub_info:a.profiles,
-                                type:"user_list",
-                                track:true
-                   			}};
-				   router_res.json(r_)
-				  }
+                   } else {
+		                   var r_ = {module:{
+		                                msg:"Total " + a.profiles.length + " Results, Select which " + name + " you want!",
+		                                sub_info:a.profiles,
+		                                type:"user_list",
+		                                track:false
+		                   			}};
+						   router_res.json(r_)
+				   }
+				});
 
-				}
-				 
-				request(options, callback);
+    	});
+       
+
+			 
 
 
 
@@ -63,56 +55,92 @@ var Users = function(router) {
 
 
      this.getUsersShortCutInfo = function(id) {
-       // console.log(this.res)
 
-			 var data1 = {
-				  "password": "KRs4T",
-				  "username": "srinivasan.g@accionlabs.com"
-				};
+     	   var res_ = auth.getAuth();
+		    	res_.then(function(response) {
+                    var options1 = {
+						  url: 'http://aicstage.accionlabs.com/profile/' + id,
+						  method:"GET",
+						  headers: {
+						    'Cookie': res_.response.caseless.dict['set-cookie']
+						  }
+						};
 
-			 var options = {
-				  url: 'http://aic1.accionlabs.com/locallogin',
-				  method:"POST",
-				  form:data1
-
-				};
+						var res__ = rp(options1);
+						res__.then(function(response) {
+                                       var a = JSON.parse(response);
+					                   a.msg_style = "user-info-card";
+					                   var before = [{msg:"here is the details of " + a.name}];
+					                   var m_ = {
+					              		by:"bot",
+					              		msg:"You can also ask --",
+					              		type:"list",
+					              		sub_info:{
+					              			list:[
+					              			      {
+					              			      	name:"who is ramesh?",
+					              			      },
+					              			      {
+					              			      	name:"Hello Bot!"
+					              			      },
+					              			      {
+					              			      	name:"Good Morning Bot!"
+					              			      }
+					              			  ]
+					              		}
+					              	}
+					                   var after = [m_];
+					                   var r_ = {module:{
+					                                msg:a,
+					                                beforeMsg : before,
+					                                afterMsg : after
+					                   			}};
+									   router_res.json(r_);
+						});
+                      res__.catch(function(err) {
+                           console.log(err)
+                      });
+		    	}); 
 				 
-			 function callback(error, response, body) {
-				  
-				  // console.log(response);
-				   //console.log(response);
-				   var token = response.headers['set-cookie'][0];
-				   token = token.slice(token.indexOf("=")+1).slice(0,token.indexOf(";"));
-				   token = token.slice(0,token.indexOf(";"));
-				   //res.send(token)
-				  // console.log(error);
+			 
 
-				  var options1 = {
-				  url: 'http://aicstage.accionlabs.com/profile/' + id,
+
+
+    }
+
+    this.fetchUsersList = function(user) {
+        var res_ = auth.getAuth();
+    	return res_.then(function(response) {
+
+    		  var options1 = {
+				  url: 'http://aic1.accionlabs.com/search?searchTxt='+user,
 				  method:"GET",
 				  headers: {
-				    'Cookie': response.headers['set-cookie'] 
+				    'Cookie': res_.response.caseless.dict['set-cookie']
 				  }
 				};
 
-				   request(options1, callback1);
+				return rp(options1) ;
+			});
+    }
 
-				  function callback1(error, response, body) {
-                   var a = JSON.parse(response.body);
-                   console.log(a)
-                   a.msg_style = "user-info-card";
-                   var r_ = {module:{
-                                msg:a
-                   			}};
-				   router_res.json(r_)
-				  }
 
-				}
-				 
-				request(options, callback);
+    this.Test = function (rr) { 
+
+    	var res_ =  auth.getAuth();
+    	res_.then(function(response) {
+             var a = res_.response.caseless.dict['set-cookie'];
+    		 rr.send(a)
+
+		   //         
 
 
 
+    	});
+    	res_.catch(function(res) {
+    		//console.log(res)
+           return res_;
+    	});
     }
 }
 
