@@ -21,8 +21,8 @@
 		</chat-scroller>
 
 		<div class='field'>
-            <input type="text" placeholder="Ask Me" ng-model="query" ng-keyup="bindQuery($event)" />
-        <md-button class="md-fab md-mini md-primary send-fab" aria-label="Use Android">
+            <input type="text" placeholder="Ask Me" ng-model="query" ng-keyup="bindQueryOnPress($event)"  />
+        <md-button class="md-fab md-mini md-primary send-fab" aria-label="Use Android" ng-disabled="query == '' || query == undefined " ng-click="bindQueryOnClick()">
           <md-icon style="color:#fff;line-height: .7;"><i class="material-icons" style="font-size: 15px">send</i></md-icon>
         </md-button>
 

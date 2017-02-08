@@ -321,13 +321,12 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile
 				}
             }
 
+              $scope.bindQueryOnClick = function() {
+              	$scope.bindQuery();
+              }
 
-			  $scope.bindQuery = function(e) {
-
-			  	var code = (e.keyCode ? e.keyCode : e.which);
-					if(code == 13) { //Enter keycode
-
-					$scope.suggestion = false; //hide suggestion section
+              $scope.bindQuery = function() {
+              	 $scope.suggestion = false; //hide suggestion section
 
 					   
 					   //check empty
@@ -342,11 +341,14 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile
 					   	   by:"me"
 					   });
 					   $scope.query = "";
+              }
 
+			  $scope.bindQueryOnPress = function(e) {
 
-					  
-
-
+			  	var code = (e.keyCode ? e.keyCode : e.which);
+					if(code == 13) { //Enter keycode
+					
+                          $scope.bindQuery();
 					}
   				}
 
