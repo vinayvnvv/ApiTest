@@ -107,6 +107,37 @@ module.exports = {
     "call_module": "123"
   }
   ]
-}
+},
+
+ custom_table : {
+  "custom": [
+ 
+      {
+              "req":{
+                "query":"Good {{alpha}} {{alpha}}"
+              },
+              "res":{
+                "msg":"Hello {{$2}}, Good [[daystate]]!!!"
+              }
+      },
+       {
+              "req":{
+                "query":"I am {{alpha}}"
+              },
+              "res":{
+                "msg":"Hello {{$1}}, How can i help u?"
+              }
+      },
+       {
+              "req":{
+                "query":"[[send]] mail [[to]] {{alpha}} with {{alpha}}"
+              },
+              "res":{
+                "msg":"Mail Sent to {{$1}} with {{$2}}"
+              }
+      }
+
+  ]
+ }
 
 }

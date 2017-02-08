@@ -1,8 +1,10 @@
 var request = require("request");
 var rp = require('request-promise');
 var parser_ = require('./../class/parser');
+var custom_parser_ = require('./../class/custom_parser');
 var Users = require('./users')
 var parser = new parser_();
+var custom_parser = new custom_parser_();
 
 
 var Exe = function(router) {
@@ -26,8 +28,17 @@ var Exe = function(router) {
                                     
                                     // this.res.send($s.action_type)
 
+                                     if((obj = custom_parser.parseCustomQuery($s.queryText))!=null) {
+                                      console.log(obj )
+                                        routerRes.json(obj);
+                                        return;
+                                     }
+
+
                                     if(this.checkGreeting($s.queryText))
                                        return;
+
+                                    
 
                                     console.log("entering next line")
                                     var p_ = parser.findAction($s.queryText);
