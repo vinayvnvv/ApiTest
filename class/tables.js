@@ -49,7 +49,7 @@ module.exports = {
   },
   {
     "matches": ["Good morning","good afternoon", "good evening", "good night", "good noon", "morning","afternoon", "evening", "night", "nice morning"],
-    "resMsg": ["Hello ! Good [[daystate]]", "hi, Good [[daystate]]"],
+    "resMsg": ["Hello ! Good $daystate$", "hi, Good $daystate$"],
     "call_module": "123"
   },
    {
@@ -117,7 +117,7 @@ module.exports = {
                 "query":"Good {{alpha}} {{alpha}}"
               },
               "res":{
-                "msg":"Hello {{$2}}, Good [[daystate]]!!!"
+                "msg":"Hello {{$2}}, Good $daystate$!!!"
               }
       },
        {
