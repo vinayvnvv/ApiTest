@@ -49,7 +49,7 @@ module.exports = {
   },
   {
     "matches": ["Good morning","good afternoon", "good evening", "good night", "good noon", "morning","afternoon", "evening", "night", "nice morning"],
-    "resMsg": ["Hello ! Good [[daystate]]", "hi, Good [[daystate]]"],
+    "resMsg": ["Hello ! Good $daystate$", "hi, Good $daystate$"],
     "call_module": "123"
   },
    {
@@ -107,6 +107,37 @@ module.exports = {
     "call_module": "123"
   }
   ]
-}
+},
+
+ custom_table : {
+  "custom": [
+ 
+      {
+              "req":{
+                "query":"Good {{alpha}} {{alpha}}"
+              },
+              "res":{
+                "msg":"Hello {{$2}}, Good $daystate$!!!"
+              }
+      },
+       {
+              "req":{
+                "query":"I am {{alpha}}"
+              },
+              "res":{
+                "msg":"Hello {{$1}}, How can i help u?"
+              }
+      },
+       {
+              "req":{
+                "query":"[[send]] mail [[to]] {{alpha}} with {{alpha}}"
+              },
+              "res":{
+                "msg":"Mail Sent to {{$1}} with {{$2}}"
+              }
+      }
+
+  ]
+ }
 
 }
