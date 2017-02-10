@@ -117,7 +117,13 @@ module.exports = {
                 "query":"Good {{alpha}} {{alpha}}"
               },
               "res":{
-                "msg":"Hello {{$2}}, Good $daystate$!!!"
+                "msg":"Hello {{$2}}, Good $daystate$!!!",
+                "sub_info":{
+                  "type":"option",
+                  "text":["hello","how"]
+                },
+                "beforeMsg":"Hello begin",
+                "afterMsg":"Hello end"
               }
       },
        {
@@ -130,7 +136,7 @@ module.exports = {
       },
        {
               "req":{
-                "query":"[[send]] mail [[to]] {{alpha}} with {{alpha}}"
+                "query":"[send ]mail [to ]{{email}}[ with] {{alpha|space}}"
               },
               "res":{
                 "msg":"Mail Sent to {{$1}} with {{$2}}"

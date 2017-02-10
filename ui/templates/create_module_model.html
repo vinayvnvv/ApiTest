@@ -1,0 +1,155 @@
+<md-dialog aria-label="Mango (Fruit)" class='new-module'>
+  <form name="createForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>New Module</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:800px;max-height:810px; min-width: 500px">
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Request">
+          <md-content class="md-padding">
+                    <div layout="row" layout-xs="column" style="margin-top: 15px">
+                    <div flex="3">
+                      Message : 
+                    </div>
+                    <div flex="7">
+                      <md-input-container class="md-block">
+                            <textarea md-maxlength="150" rows="2" required type="text" name="req_msg" ng-model="module.req_msg"
+                                   minlength="1"></textarea>
+
+                            <div ng-messages="createForm.req_msg.$error" role="alert">
+                              <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Required Filed ! 
+                              </div>
+                            </div>
+                     </md-input-container>
+                    </div>
+                  </div>
+        </md-content>
+        </md-tab>
+        <md-tab label="Response">
+          <md-content class="md-padding">
+
+
+            
+               <div layout="row" layout-xs="column" >
+                    <div flex="3">
+                      Message : 
+                    </div>
+                    <div flex="7">
+                      <md-input-container class="md-block">
+                            <textarea md-maxlength="150" rows="2" required  name="res_msg" ng-model="module.res_msg"
+                                   minlength="1"></textarea>
+
+                            <div ng-messages="createForm.res_msg.$error" role="alert">
+                              <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                              Required Filed ! 
+                              </div>
+                            </div>
+                     </md-input-container>
+                    </div>
+                  </div>
+
+
+
+                <div layout="row" layout-xs="column" >
+                    <div flex="4">
+                      Before Message : 
+                    </div>
+                    <div flex="8">
+                      <md-input-container class="md-block">
+                            <textarea md-maxlength="150" rows="1" name="res_before_msg" ng-model="module.res_before_msg"
+                                   minlength="1"></textarea>
+
+                            <div ng-messages="createForm.res_before_msg.$error" role="alert">
+                              <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Required Filed ! 
+                              </div>
+                            </div>
+                     </md-input-container>
+                    </div>
+                  </div> 
+                
+
+                 <div layout="row" layout-xs="column" >
+                    <div flex="4">
+                      After Message : 
+                    </div>
+                    <div flex="6">
+                      <md-input-container class="md-block">
+                            <textarea md-maxlength="150" rows="1" name="res_after_msg" ng-model="module.res_after_msg"
+                                   minlength="1"></textarea>
+
+                            <div ng-messages="createForm.res_after_msg.$error" role="alert">
+                              <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                              Required Filed ! 
+                              </div>
+                            </div>
+                     </md-input-container>
+                    </div>
+                  </div>
+
+                 <md-divider></md-divider>
+
+                  <div layout="row" layout-xs="column" style="margin-top: 11px">
+                    <div flex="4">
+                      ShortCut display : 
+                    </div>
+                    <div flex="6">
+                          <md-input-container class="md-block" flex-gt-sm>
+                              <md-select ng-model="module.res_subinfo_type">
+                                <md-option value="none" selected>None</md-option>
+                                <md-option value="option">Option</md-option>
+                                <md-option value="list">List</md-option>
+                              </md-select>
+                          </md-input-container>
+
+                          <md-input-container class="md-block" ng-if="module.res_subinfo_type != 'none'">
+                            <textarea rows="1" name="res_subinfo_value" ng-model="module.res_subinfo_value"
+                                   minlength="1"></textarea>
+
+                            <div ng-messages="createForm.res_after_msg.$error" role="alert">
+                              <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                              Required Filed ! 
+                              </div>
+                            </div>
+                     </md-input-container>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+          </md-content>
+        </md-tab>
+        <md-tab label="three">
+          <md-content class="md-padding">
+            
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-primary" ng-click="createModule()" >
+        Create
+      </md-button>
+      <md-button ng-click="answer('useful')" style="margin-right:20px;" >
+        Cancel
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

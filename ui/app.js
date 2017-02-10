@@ -22,12 +22,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
        	  controller: "chatCtrl"
        })   
 
-    //  $stateProvider
-    //    .state("reg", {
-    //    	  url: "/reg",
-    //    	  templateUrl: "src/reg/reg.html",
-    //    	  controller: "regCtrl"
-    //    })      
+     $stateProvider
+       .state("create", {
+       	  url: "/create",
+       	  templateUrl: "app/create/html/main.html",
+       	  controller: "createCtrl"
+       })      
 
 
 

@@ -17,7 +17,7 @@ var Users = function(router) {
     	res_.then(function(response) {
 
     		  var options1 = {
-				  url: 'http://aic1.accionlabs.com/search?searchTxt='+name,
+				  url: 'http://aic.accionlabs.com/search?searchTxt='+name,
 				  method:"GET",
 				  headers: {
 				    'Cookie': res_.response.caseless.dict['set-cookie']

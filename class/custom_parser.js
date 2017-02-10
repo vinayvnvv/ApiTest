@@ -14,8 +14,25 @@ var CustomParser = function () {
 
 
             var match = custom_table[i].req.query;
-            var regex_str = match.replace(/{{[a-z]*}}/g, "(.*)*");
-            var regex_str = regex_str.replace(/(\[\[([a-z]*)\]\](\s)*)/g, "[$2]*[$3]*");
+            var regex_str = match.replace(/{{[a-zA-Z\|]*}}/g, function($1) {
+   
+                       console.log($1);
+                       var array = $1.replace(/{{([a-zA-Z|]*)}}/g,"$1").split("|");
+                       console.log(array);
+                       var rtrn = "";
+                       for(var i=0;i<array.length;i++) {
+                           if(array[i] == 'all')  return "([.*]+)*";
+                           if(array[i] == 'alpha')  rtrn += "a-zA-Z";
+                           if(array[i] == 'num')    rtrn += "0-9";
+                           if(array[i] == 'space')  rtrn += "\\s";
+                           if(array[i] == 'email')  return "([a-zA-Z0-9\_\-]+\@[a-zA-Z0-9\_]+\.[a-zA-Z0-9]+)";
+                       }
+                       console.log("rtrn=" + rtrn);
+                       rtrn = "([" + rtrn + "]*)";
+                       return rtrn;
+              
+            });
+            regex_str = regex_str.replace(/\[([a-zA-Z\s]*)\]/g, "[$1]*");
             console.log(regex_str)
             var regex = new RegExp(regex_str, "i");
 

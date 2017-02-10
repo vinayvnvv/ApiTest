@@ -7,13 +7,13 @@ console.log(db)
 
 
 router.get('/', function(req, res, next) {
-	db.test.find(function(err, docs) {
-          if(err) {
-          	res.send(err);
-          }
-            res.json(docs);
+	// db.test.find(function(err, docs) {
+ //          if(err) {
+ //          	res.send(err);
+ //          }
+ //            res.json(docs);
 
-	});
+	// });
 });
 
 

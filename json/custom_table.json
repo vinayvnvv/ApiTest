@@ -1,0 +1,1 @@
+,{"req":{"query":"Hello {{alpha}}"},"res":{"msg":"Hi {{$1}}, Good morning!!","after_msg":"How can i Help You?","sub_info":{"type":"option","text":["Who is Vinay","hello"]}}},{"req":{"query":"I am {{alpha}}"},"res":{"msg":"Hello {{$1}}","after_msg":"How can i Help You?","sub_info":{"type":"option","text":["Who is Vinay","hello"]}}}

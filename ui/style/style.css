@@ -323,3 +323,9 @@
             60% {transform: translateX(11px);} 
             80% {-webkit-transform: translateX(7px);} 
          }
+
+.new-module md-input-container {
+  margin:0!important;
+  position: relative!important;
+    top: -9px!important;
+}         
