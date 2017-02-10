@@ -1,4 +1,4 @@
-app.controller('createCtrl', ['$scope', '$mdDialog', '$rootScope', function($scope, $mdDialog, $rootScope){
+app.controller('createCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', function($scope, $mdDialog, $rootScope, $http){
 	console.log("called createCtrl");
 
 
@@ -17,6 +17,19 @@ app.controller('createCtrl', ['$scope', '$mdDialog', '$rootScope', function($sco
 		      $scope.status = 'You cancelled the dialog.';
 		    });
 	  };
+
+	  $scope.getModules = function() {
+
+       var res = $http.get("http://localhost:3004/api/file/read");
+       res.success(function(res) {
+       	console.log(res)
+       	console.log(JSON.parse(res))
+       })
+
+	  }
+
+
+
 
 
 	 

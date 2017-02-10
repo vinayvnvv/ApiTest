@@ -1,13 +1,13 @@
 var fs = require('fs');
 var express = require('express');
 var router = express.Router()
-
+var file_location = 'json/custom_table.json';
 
 router.post('/insert', function(req, res, next) {
 
     var data = ',' + JSON.stringify(req.body);
     console.log(data)
-    fs.appendFile('json/custom_table.json', data, (err) => {
+    fs.appendFile(file_location, data, (err) => {
 		  if(err) { 
 		  	res.json({success:0,msg:"insertion failed!"});
 		  	throw err;
@@ -22,4 +22,25 @@ router.post('/insert', function(req, res, next) {
 });
 
 module.exports = router;
+
+router.get('/read', function(req, res, next) {
+
+    var data = ',' + JSON.stringify(req.body);
+    console.log(data)
+    fs.readFile(file_location, (err, data) => {
+		  if (err) { throw err; }
+		  else {
+		  data = String(data);
+		  var i = data.indexOf("{");
+		  data = data.slice(i);
+		  data = `{"custom_table" : [` + data + `]}`;
+		  res.json(data);
+		}
+    });
+  
+
+});
+
+
+
 
