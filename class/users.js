@@ -76,7 +76,7 @@ var Users = function(router) {
 					              		msg:"You can also ask --",
 					              		type:"list",
 					              		sub_info:{
-					              			list:[
+					              			items:[
 					              			      {
 					              			      	name:"who is ramesh?",
 					              			      },

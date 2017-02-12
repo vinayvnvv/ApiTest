@@ -1,9 +1,65 @@
+
 <div >
+
+
+
+
+
+
+
+
 	
+<md-toolbar style="z-index: 0">
+      <div class="md-toolbar-tools">
 
-<md-button ng-click="openCreateModule()">New Module</md-button>
+       <h2 flex md-truncate>Chat Bot Modules</h2>
 
-<md-button ng-click="getModules()">Get Modules</md-button>
+        <span flex></span>
+       <md-button ng-click="createModule()"><md-icon><i class="material-icons">add_box</i> </md-icon> New Module</md-button>
+       <md-button ng-click="getModules()"><md-icon><i class="material-icons">refresh</i></md-icon> Refresh</md-button>
+      </div>
+    </md-toolbar>
+
+
+ <md-content style="margin:11px">
+
+
+<d-table ng-if="!isLoading" d-class="animation-bottom-long" d-default-style="true" d-animate="true" no-paginationS d-max-rows="5" d-pagination-position="top||bottom" d-search-position="top" d-max-page-links="7"> 
+
+		<table-header>
+			<colm d-sort="req.query">Req</colm>
+			<colm d-sort="res.msg">Res Msg</colm>
+			<colm d-sort="res.after_msg">Res After</colm>
+			<colm d-sort="res.before_msg">Res Before</colm>
+			<colm>Res Shortcut</colm>
+			<colm>Action</colm>
+
+		</table-header>
+
+
+
+		<table-body ng-repeat="m in modules_data.custom_table" class="item" d-filterr="">
+			<colm>{{m.req.query}}</colm>
+			<colm>{{m.res.msg}}</colm>
+			<colm>{{m.res.after_msg||'-'}}</colm>
+			<colm>{{m.res.before_msg||'-'}}</colm>
+			<colm>{{m.res.sub_info.type}}<br/>{{m.res.sub_info.text}}</colm>
+			<colm>
+			<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+			<md-button ng-click='editModule(m)' class="md-icon-button" aria-label="Comment"><md-icon><i class="material-icons" style="color:green">edit</i></md-icon></md-button>
+			<md-button ng-click='deleteModule(m)' class="md-icon-button" aria-label="Comment"><md-icon><i style="color:#cc0000" class="material-icons">remove_circle</i></md-icon></md-button>
+			</section>
+			</colm>
+		</table-body>
+
+</d-table>
+
+
+</md-content>
+
+
+
+<loader ng-if="isLoading"></loader>
 
 
 </div>

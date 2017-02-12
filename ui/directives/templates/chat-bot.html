@@ -13,7 +13,7 @@
 
 
 		<chat-scroller class="container" chat-scroller style="{{scroller_custom_height}}">
-				<li ng-repeat="m in msgs track by $index" class="msg {{m.by || 'bot'}} {{m.msg.msg_style}}">
+				<li ng-animate="'animate'" ng-repeat="m in msgs track by $index" class="animation msg {{m.by || 'bot'}} {{m.msg.msg_style}}">
 				<ng-include src="'directives/templates/chat-msgs.html'"></ng-include>
 				</li>
 				<div ng-if="suggestion" ng-include="suggestion_template" class="sug-container"></div>

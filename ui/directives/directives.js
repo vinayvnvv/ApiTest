@@ -70,7 +70,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile
               		msg:"Welcome! I am Your Assistant, How can I Help You?",
               		type:"option",
               		sub_info:{
-              			option:[
+              			items:[
               			      {
               			      	name:"who ramesh?",
               			      },
@@ -209,13 +209,13 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile
                   if(type == 'option') {
                   	$scope.suggestion_template = "directives/templates/option.html";
                   	$scope.suggestion = true;
-                  	$scope.suggestionData = data.option;
+                  	$scope.suggestionData = data.items;
                   }
 
                   if(type == 'list') {
                   	$scope.suggestion_template = "directives/templates/list.html";
                   	$scope.suggestion = true;
-                  	$scope.suggestionData = data.list;
+                  	$scope.suggestionData = data.items;
                   }
                   if(type == 'user_list') {
                   	$scope.suggestion_template = "directives/templates/user_card.html";

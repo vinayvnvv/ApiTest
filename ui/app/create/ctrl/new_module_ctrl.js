@@ -1,8 +1,42 @@
-app.controller('NewModuleDialogController', ['$scope', '$http', function($scope, $http){
+app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$mdDialog', '$mdToast', function($scope, $http, $rootScope, $mdDialog, $mdToast){
 
 	console.log("Called dailog ctrl")
 	$scope.res_module = {};
 	$scope.module = {};
+	$scope.model = {};
+
+	if($rootScope.module_open_type == 'edit') {
+       
+       $scope.model.title = "Edit Module";
+       $scope.model.button_name = "Edit";
+
+
+
+		$scope.module.req_msg = $rootScope.selectedModuleForEdit.req.query;
+		$scope.module.res_msg = $rootScope.selectedModuleForEdit.res.msg;
+		$scope.module.res_before_msg = $rootScope.selectedModuleForEdit.res.before_msg;
+		$scope.module.res_after_msg = $rootScope.selectedModuleForEdit.res.after_msg;
+		if($rootScope.selectedModuleForEdit.res.sub_info) {
+	    var vl = '';
+	    $scope.module.res_subinfo_type = $rootScope.selectedModuleForEdit.res.sub_info.type;
+	      for(var i=0;i<$rootScope.selectedModuleForEdit.res.sub_info.text.length;i++) {
+	      	if(i>0)  vl += '\n';
+	      	vl += $rootScope.selectedModuleForEdit.res.sub_info.text[i];
+	      }
+
+	      $scope.module.res_subinfo_value = vl;
+	      console.log(vl)
+	  }
+	} else {
+	   $scope.model.title = "New Module";
+       $scope.model.button_name = "Create";
+
+
+	   $scope.module.res_subinfo_type = 'none';	
+	}
+
+   console.log($scope.module)
+
 
 	 $scope.createModule = function() {
 	 	$scope.new_module = {};
@@ -35,15 +69,49 @@ app.controller('NewModuleDialogController', ['$scope', '$http', function($scope,
 	  	if($scope.createForm.$valid) { 
 	  		console.log($scope.new_module);
 
-	  		var res_ = $http.post("http://localhost:3004/api/file/insert", $scope.new_module);
-	  		res_.success(function(res) {
-	  			console.log(res)
-	  		})
+	  		if($rootScope.module_open_type == 'insert') { //insert
+	  			$scope.isLoading = true;
+			  		var res_ = $http.post("http://localhost:3004/api/file/insert", $scope.new_module);
+			  		res_.success(function(res) {
+			  			$scope.isLoading = false;
+			  			console.log(res);
+			  			$rootScope.getModules();
+			  			$mdDialog.cancel();
+			  			$mdToast.show(
+						      $mdToast.simple()
+						        .textContent('Module Created !')
+						        .position("bottom")
+						        .hideDelay(3000)
+						    );
+			  		});
+
+	  		} else { //edit
+	  			$scope.isLoading = true;
+	  			var res_ = $http.post("http://localhost:3004/api/file/edit/"+ $rootScope.selectedModuleForEdit.id_, $scope.new_module);
+			  		res_.success(function(res) {
+			  			$scope.isLoading = false;
+			  			console.log(res);
+			  			$rootScope.getModules();
+			  			$mdDialog.cancel();
+			  			$mdToast.show(
+						      $mdToast.simple()
+						        .textContent('Module Edited successfully !')
+						        .position("bottom")
+						        .hideDelay(3000)
+						    );
+			  		})
+
+	  		}
 
 
 
 	   }
 	  }
+
+
+	   $scope.cancel = function() {
+	      $mdDialog.cancel();
+	    };
 
 	
 }]);

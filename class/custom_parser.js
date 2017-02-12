@@ -1,8 +1,20 @@
-var table = require('./tables');
+var fs = require('fs');
+var custom_table = '';
+var file_location = 'json/custom_table.json';
 
-var custom_table = table.custom_table.custom;
+       fs.readFile(file_location, (err, data) => {
+        if (err) throw err;
+        data = String(data);
+        data = data.slice(data.indexOf("{"), data.lastIndexOf("}") + 1);
+        data = `[` + data + `]`;
+        custom_table = JSON.parse(data);
+      });
 
 var CustomParser = function () {  
+
+
+     
+
 
     //returns null if no match found .. returns object of the msg module if match found
     this.parseCustomQuery = function(q) {
@@ -46,6 +58,20 @@ var CustomParser = function () {
                                     msg: this.parse_response(res_str, matched)
                                     }
                     };
+
+                if(custom_table[i].res.before_msg != undefined) response.module.beforeMsg = [{msg:this.parse_response(custom_table[i].res.before_msg, matched)}];
+                if(custom_table[i].res.after_msg != undefined) response.module.afterMsg = [{msg:this.parse_response(custom_table[i].res.after_msg, matched)}];
+  
+                if(custom_table[i].res.sub_info != undefined) {
+                   response.module.type = custom_table[i].res.sub_info.type;
+                   var f = "" + response.module.type + "";
+                   response.module.sub_info = {items:[]};
+                   console.log(response.module.sub_info)
+                   for(var j=0;j<custom_table[i].res.sub_info.text.length;j++) {
+                        var itm = {name:this.parse_response(custom_table[i].res.sub_info.text[j], matched)};
+                        response.module.sub_info.items.push(itm);
+                   }
+                }
                 //console.log(response) 
                 return response;
             } 
@@ -64,6 +90,7 @@ var CustomParser = function () {
 
                 return re_regex;
   }
+
 
 }
 

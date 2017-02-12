@@ -19,7 +19,7 @@ var Exe = function(router) {
       concat:null,
       res_case:null,
       last_str:null
-   };
+   }; 
          this.initModule = function() {
 
                
