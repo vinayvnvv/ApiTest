@@ -6,7 +6,7 @@
 
 
 
-
+<md-progress-linear md-mode="indeterminate" class="md-primary-900" ng-if="isRefreshing"></md-progress-linear>
 
 	
 <md-toolbar style="z-index: 0">
@@ -16,7 +16,7 @@
 
         <span flex></span>
        <md-button ng-click="createModule()"><md-icon><i class="material-icons">add_box</i> </md-icon> New Module</md-button>
-       <md-button ng-click="getModules()"><md-icon><i class="material-icons">refresh</i></md-icon> Refresh</md-button>
+       <md-button ng-click="refresh()"><md-icon><i class="material-icons">refresh</i></md-icon> Refresh</md-button>
       </div>
     </md-toolbar>
 
@@ -24,7 +24,7 @@
  <md-content style="margin:11px">
 
 
-<d-table ng-if="!isLoading" d-class="animation-bottom-long" d-default-style="true" d-animate="true" no-paginationS d-max-rows="5" d-pagination-position="top||bottom" d-search-position="top" d-max-page-links="7"> 
+<d-table d-class="animation-bottom-long" d-default-style="true" d-animate="true" no-paginationS d-max-rows="5" d-pagination-position="top||bottom" d-search-position="top" d-max-page-links="7"> 
 
 		<table-header>
 			<colm d-sort="req.query">Req</colm>

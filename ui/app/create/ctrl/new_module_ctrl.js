@@ -1,4 +1,4 @@
-app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$mdDialog', '$mdToast', function($scope, $http, $rootScope, $mdDialog, $mdToast){
+app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$mdDialog', '$mdToast', '$timeout', function($scope, $http, $rootScope, $mdDialog, $mdToast, $timeout){
 
 	console.log("Called dailog ctrl")
 	$scope.res_module = {};
@@ -75,7 +75,7 @@ app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$
 			  		res_.success(function(res) {
 			  			$scope.isLoading = false;
 			  			console.log(res);
-			  			$rootScope.getModules();
+			  			$timeout(function() {$rootScope.refresh();}, 2000)
 			  			$mdDialog.cancel();
 			  			$mdToast.show(
 						      $mdToast.simple()
@@ -91,7 +91,8 @@ app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$
 			  		res_.success(function(res) {
 			  			$scope.isLoading = false;
 			  			console.log(res);
-			  			$rootScope.getModules();
+			  			$timeout(function() {$rootScope.refresh();}, 2000)
+			  			
 			  			$mdDialog.cancel();
 			  			$mdToast.show(
 						      $mdToast.simple()

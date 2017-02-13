@@ -1,4 +1,4 @@
-app.controller('createCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$mdToast', function($scope, $mdDialog, $rootScope, $http, $mdToast){
+app.controller('createCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$mdToast', '$timeout', function($scope, $mdDialog, $rootScope, $http, $mdToast, $timeout){
 	console.log("called createCtrl");
 
 
@@ -25,18 +25,32 @@ app.controller('createCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$md
 
 	  $rootScope.getModules = function() {
 
-	  	$rootScope.isLoading = true;
+	  	//$rootScope.isLoading = true;
+	  	$scope.isRefreshing = true;
 
        var res = $http.get("http://localhost:3004/api/file/read");
        res.success(function(res) {
        	console.log(res)
        	console.log($scope.modules_data = JSON.parse(res));
-       	$rootScope.isLoading = false;
+          	$rootScope.isLoading = false;
+          	$scope.isRefreshing = false;
+          	console.log($scope.modules_data)
        })
        res.error(function(res) {
        	$rootScope.isLoading = false;
        })
 
+	  }
+
+	  $rootScope.refresh = function () {
+	  	$scope.isRefreshing = true;
+	  	$mdToast.show(
+						      $mdToast.simple()
+						        .textContent('Refreshing Modules !')
+						        .position("bottom")
+						        .hideDelay(3000)
+						    );
+	  	$scope.getModules();
 	  }
 
 
@@ -69,7 +83,7 @@ app.controller('createCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$md
 						        .hideDelay(3000)
 						    );
 
-					  		$rootScope.getModules();
+					  		$timeout(function() {$rootScope.refresh();}, 2000);
 					  	})
 
 
