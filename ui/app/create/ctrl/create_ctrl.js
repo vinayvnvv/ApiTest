@@ -46,7 +46,7 @@ app.controller('createCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$md
 	  	$scope.isRefreshing = true;
 	  	$mdToast.show(
 						      $mdToast.simple()
-						        .textContent('Refreshing Modules !')
+						        .textContent('Refreshing Modules....')
 						        .position("bottom")
 						        .hideDelay(3000)
 						    );

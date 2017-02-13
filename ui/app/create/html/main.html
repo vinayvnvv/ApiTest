@@ -27,6 +27,7 @@
 <d-table d-class="animation-bottom-long" d-default-style="true" d-animate="true" no-paginationS d-max-rows="5" d-pagination-position="top||bottom" d-search-position="top" d-max-page-links="7"> 
 
 		<table-header>
+		    <colm>Id</colm>
 			<colm d-sort="req.query">Req</colm>
 			<colm d-sort="res.msg">Res Msg</colm>
 			<colm d-sort="res.after_msg">Res After</colm>
@@ -39,6 +40,7 @@
 
 
 		<table-body ng-repeat="m in modules_data.custom_table" class="item" d-filterr="">
+		    <colm>{{m.id_}}</colm>
 			<colm>{{m.req.query}}</colm>
 			<colm>{{m.res.msg}}</colm>
 			<colm>{{m.res.after_msg||'-'}}</colm>

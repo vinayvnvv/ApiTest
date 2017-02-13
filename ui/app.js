@@ -1,5 +1,5 @@
 //bootstartp App
-var app = angular.module('mainApp', ['ngAnimate', 'ngMaterial', 'ui.router', 'dTable']);
+var app = angular.module('mainApp', ['ngAnimate', 'ngMaterial', 'ui.router', 'dTable', 'autoAddInput']);
 
 //Routing
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {

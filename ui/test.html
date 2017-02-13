@@ -32,8 +32,12 @@
 
 <body ng-app="mainApp" ng-controller="mainCtrl">
 
-<input type="text" ng-model="query" ng-keyup="exeQuery($event)"/>
-    
+{{text}}
+
+<auto-input ng-model="text">
+<br/>
+  <input type="text" data-array='$index'/>
+</auto-input>
 
 
 </body>
