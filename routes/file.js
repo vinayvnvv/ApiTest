@@ -10,6 +10,7 @@ router.post('/insert', function(req, res, next) {
 
 	setTimeout(addModule, 2000);
 
+
 	function addModule() {
 		var data = ',' + JSON.stringify(req.body);
 	    console.log(data)
