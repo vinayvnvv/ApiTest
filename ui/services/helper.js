@@ -1,4 +1,4 @@
-app.service('Helper', ['$rootScope', function($rootScope) {
+app.service('Helper', ['$rootScope', '$location', function($rootScope, $location) {
 
 	this.getDayState = function() {
 		var myDate = new Date();
@@ -15,6 +15,11 @@ app.service('Helper', ['$rootScope', function($rootScope) {
 		        greet = 'night';
 
 		return greet    
+	}
+
+	this.getCurrentHost = function() {
+		return ($location.$$protocol + "://" + $location.$$host + ":" + $location.$$port + "/");
+
 	}
 
 	

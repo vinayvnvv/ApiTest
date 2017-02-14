@@ -1,4 +1,5 @@
-app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile', function($http, $timeout, $rootScope, Parser, $compile){
+app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile', '$location', 'Helper', function($http, $timeout, $rootScope, Parser, $compile, $location, Helper
+){
 	// Runs during compile
 	return {
 		// name: '',
@@ -7,6 +8,8 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile
 		scope: {}, // {} = isolate, true = child, false/undefined = no change
 	    controller: function($scope, $element, $attrs, $transclude) {
 
+
+            Helper.getCurrentHost();
 	    	 
 
 
@@ -47,7 +50,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile
 
 			  $scope.getModule = function (id) {
 			  	//$scope.isTrack = true;
-                 var res = $http.get("http://127.0.0.1:3004/api/bot/module");
+                 var res = $http.get(Helper.getCurrentHost() + "api/bot/module");
                  res.success(function(data) {
                  	console.log(data[0].module)
                  	$scope.popTypingMsg();
@@ -128,7 +131,7 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile
                    data.shortcut = $scope.shortcutType;	
                    data.userId = $scope.userId;
                }
-                 var res = $http.post("http://localhost:3004/api/bot/module",data);
+                 var res = $http.post(Helper.getCurrentHost() + "api/bot/module",data);
                  res.success(function(data) {
 
                  	//play bot sound
