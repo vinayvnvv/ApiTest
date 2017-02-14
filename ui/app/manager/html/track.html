@@ -1,0 +1,51 @@
+
+<div >
+
+
+
+
+
+
+<md-progress-linear md-mode="indeterminate" class="md-primary-900" ng-if="isRefreshing" style="position: fixed;z-index: 30"></md-progress-linear>
+
+	
+<md-toolbar style="z-index: 0">
+      <div class="md-toolbar-tools">
+
+      <md-button class="md-icon-button" ng-click="back()"><md-icon><i class="material-icons">arrow_back</i></md-icon></md-button>
+
+       <h2 flex md-truncate>Queries tracking</h2>
+
+      </div>
+    </md-toolbar>
+
+
+ <md-content style="margin:11px">
+
+
+<d-table d-class="animation-bottom-long" d-default-style="true" d-animate="true" no-paginationS d-max-rows="10" d-pagination-position="top||bottom" d-search-position="top" d-max-page-links="7"> 
+
+		<table-header>
+			<colm d-sort="req.query">Query</colm>
+			<colm>type</colm>
+
+		</table-header>
+
+
+
+		<table-body ng-repeat="t in track_data" class="item" d-filterr="">
+			<colm>{{t.msg}}</colm>
+			<colm>{{m.res.msg}}</colm>
+		</table-body>
+
+</d-table>
+
+
+</md-content>
+
+
+
+<loader ng-if="isLoading"></loader>
+
+
+</div>

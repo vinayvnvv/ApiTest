@@ -23,11 +23,20 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
        })   
 
      $stateProvider
-       .state("create", {
-       	  url: "/create",
-       	  templateUrl: "app/create/html/main.html",
-       	  controller: "createCtrl"
-       })      
+       .state("manager", {
+       	  url: "/manager",
+       	  templateUrl: "app/manager/html/dashboard.html",
+       	  controller: "managerCtrl"
+       }) 
+
+    $stateProvider
+       .state("track", {
+          url: "/track",
+          templateUrl: "app/manager/html/track.html",
+          controller: "trackCtrl"
+       })    
+
+
 
 
 

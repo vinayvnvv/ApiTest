@@ -9,6 +9,7 @@ var mdb = db;
 
 var table = require('./../class/tables');
 var Exe = require('./../class/exe');
+var db_helper = require('./../db/helper.js');
 
 MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
 
@@ -120,6 +121,9 @@ router.post("/records", function(req, res, next) {
 
  router.post("/module", function(req, res, next) {
 
+
+  (new db_helper).trackQueryToLocal(req.body);
+
   
 //init()
 
@@ -131,6 +135,7 @@ if(req.body.shortcut == undefined) {
   setTimeout(function() { exe.initShortcutModule(); }, 1500);
   
 }
+
 
 // var data1 = {
 //   "password": "KRs4T",
