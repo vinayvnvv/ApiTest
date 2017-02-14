@@ -65,7 +65,7 @@ app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$
 
 	  		if($rootScope.module_open_type == 'insert') { //insert
 	  			$scope.isLoading = true;
-			  		var res_ = $http.post("http://localhost:3004/api/file/insert", $scope.new_module);
+			  		var res_ = $http.post("api/file/insert", $scope.new_module);
 			  		res_.success(function(res) {
 			  			$scope.isLoading = false;
 			  			console.log(res);
@@ -81,7 +81,7 @@ app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$
 
 	  		} else { //edit
 	  			$scope.isLoading = true;
-	  			var res_ = $http.post("http://localhost:3004/api/file/edit/"+ $rootScope.selectedModuleForEdit.id_, $scope.new_module);
+	  			var res_ = $http.post("api/file/edit/"+ $rootScope.selectedModuleForEdit.id_, $scope.new_module);
 			  		res_.success(function(res) {
 			  			$scope.isLoading = false;
 			  			console.log(res);

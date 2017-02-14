@@ -28,7 +28,7 @@ app.controller('createCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$md
 	  	//$rootScope.isLoading = true;
 	  	$scope.isRefreshing = true;
 
-       var res = $http.get("http://localhost:3004/api/file/read");
+       var res = $http.get("api/file/read");
        res.success(function(res) {
        	console.log(res)
        	console.log($scope.modules_data = JSON.parse(res));
@@ -73,7 +73,7 @@ app.controller('createCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$md
 
 			    $mdDialog.show(confirm).then(function() {
 			      
-			       var res = $http.delete("http://localhost:3004/api/file/delete/" + m.id_);
+			       var res = $http.delete("api/file/delete/" + m.id_);
 					  	res.success(function(res) {
 					  		console.log(res)
 					  		$mdToast.show(
