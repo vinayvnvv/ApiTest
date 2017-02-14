@@ -17,15 +17,9 @@ app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$
 		$scope.module.res_before_msg = $rootScope.selectedModuleForEdit.res.before_msg;
 		$scope.module.res_after_msg = $rootScope.selectedModuleForEdit.res.after_msg;
 		if($rootScope.selectedModuleForEdit.res.sub_info) {
-	    var vl = '';
 	    $scope.module.res_subinfo_type = $rootScope.selectedModuleForEdit.res.sub_info.type;
-	      for(var i=0;i<$rootScope.selectedModuleForEdit.res.sub_info.text.length;i++) {
-	      	if(i>0)  vl += '\n';
-	      	vl += $rootScope.selectedModuleForEdit.res.sub_info.text[i];
-	      }
 
-	      $scope.module.res_subinfo_value = vl;
-	      console.log(vl)
+	      $scope.module.res_subinfo_value = $rootScope.selectedModuleForEdit.res.sub_info.text;
 	  }
 	} else {
 	   $scope.model.title = "New Module";
@@ -54,7 +48,7 @@ app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$
        //sub info parser 
        if($scope.module.res_subinfo_type != 'none' && $scope.module.res_subinfo_value != undefined) {
        	console.log($scope.module.res_subinfo_value)
-       	  var sbinfo = $scope.module.res_subinfo_value.split("\n");
+       	  var sbinfo = $scope.module.res_subinfo_value;
        	  if(sbinfo.length!=0 && $scope.module.res_subinfo_value != '') {
        	  	res.sub_info = {};
        	  	res.sub_info.type = $scope.module.res_subinfo_type;

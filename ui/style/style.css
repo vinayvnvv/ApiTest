@@ -143,6 +143,7 @@
 .sug-container {
   display:block;
   float: left;
+  min-width: 30%;
 }
 
 
@@ -409,3 +410,34 @@
   opacity: 0;
   bottom:-17px;
 }
+
+.new-module input[type=text] {
+    outline: none;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-image: initial;
+    border-bottom: 1px solid rgb(217, 217, 217);
+    background: transparent;
+    padding:7px;
+    width: 80%; 
+    font-size:15px;
+    transition: 0.3s all;
+}
+
+.new-module input[type=text]:hover {
+    border-bottom: 1px solid #999999 ;
+  }
+  .new-module input[type=text]:focus {
+    border-bottom: 1px solid #000 ;
+  }
+
+.caption {
+    background-color: #e0e0e0;
+    border-radius: 9px;
+    padding: 3px 7px;
+    overflow: hidden;
+    font-size: 13px;
+    display: inline-block;
+    margin: 0 3px;
+}  

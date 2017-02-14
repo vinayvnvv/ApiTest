@@ -14,10 +14,10 @@
         <md-tab label="Request">
           <md-content class="md-padding">
                     <div layout="row" layout-xs="column" style="margin-top: 15px">
-                    <div flex="3">
+                    <div flex="4">
                       Message : 
                     </div>
-                    <div flex="7">
+                    <div flex>
                       <md-input-container class="md-block">
                             <textarea md-maxlength="150" rows="2" required type="text" name="req_msg" ng-model="module.req_msg"
                                    minlength="1"></textarea>
@@ -41,7 +41,7 @@
                     <div flex="3">
                       Message : 
                     </div>
-                    <div flex="7">
+                    <div flex>
                       <md-input-container class="md-block">
                             <textarea md-maxlength="150" rows="2" required  name="res_msg" ng-model="module.res_msg"
                                    minlength="1"></textarea>
@@ -61,7 +61,7 @@
                     <div flex="4">
                       Before Message : 
                     </div>
-                    <div flex="8">
+                    <div flex>
                       <md-input-container class="md-block">
                             <textarea md-maxlength="150" rows="1" name="res_before_msg" ng-model="module.res_before_msg"
                                    minlength="1"></textarea>
@@ -80,7 +80,7 @@
                     <div flex="4">
                       After Message : 
                     </div>
-                    <div flex="6">
+                    <div flex>
                       <md-input-container class="md-block">
                             <textarea md-maxlength="150" rows="1" name="res_after_msg" ng-model="module.res_after_msg"
                                    minlength="1"></textarea>
@@ -100,7 +100,7 @@
                     <div flex="4">
                       ShortCut display : 
                     </div>
-                    <div flex="6">
+                    <div flex>
                           <md-input-container class="md-block" flex-gt-sm>
                               <md-select ng-model="module.res_subinfo_type">
                                 <md-option value="none" >None</md-option>
@@ -109,7 +109,7 @@
                               </md-select>
                           </md-input-container>
 
-                          <md-input-container class="md-block" ng-if="module.res_subinfo_type != 'none'">
+                         <!--  <md-input-container class="md-block" ng-if="module.res_subinfo_type != 'none'">
                             <textarea rows="1" name="res_subinfo_value" ng-model="module.res_subinfo_value"
                                    minlength="1"></textarea>
 
@@ -118,16 +118,12 @@
                               Required Filed ! 
                               </div>
                             </div>
-                     </md-input-container>
+                     </md-input-container> -->
 
-                     {{text}}
-                     <auto-add-input ng-model="text">
-
-                      <md-input-container class="md-block">
-                            <input data-array='$index' rows="1" name="res_subinfo_value" ng-model="module.res_subinfo_value"
+                     
+                     <auto-add-input ng-model="module.res_subinfo_value" ng-if="module.res_subinfo_type != 'none'">
+                            <input data-array='$index' type="text"
                                    minlength="1"/>
-                           
-                     </md-input-container>
 
                      </auto-add-input>
 

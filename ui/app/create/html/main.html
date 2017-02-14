@@ -6,7 +6,7 @@
 
 
 
-<md-progress-linear md-mode="indeterminate" class="md-primary-900" ng-if="isRefreshing"></md-progress-linear>
+<md-progress-linear md-mode="indeterminate" class="md-primary-900" ng-if="isRefreshing" style="position: fixed;z-index: 30"></md-progress-linear>
 
 	
 <md-toolbar style="z-index: 0">
@@ -45,7 +45,10 @@
 			<colm>{{m.res.msg}}</colm>
 			<colm>{{m.res.after_msg||'-'}}</colm>
 			<colm>{{m.res.before_msg||'-'}}</colm>
-			<colm>{{m.res.sub_info.type}}<br/>{{m.res.sub_info.text}}</colm>
+			<colm><span class='caption'>{{m.res.sub_info.type || "not defined"}}</span>
+			<div style="margin-top: 7px">
+			<span class='caption' ng-repeat='item in m.res.sub_info.text' md-colors="{background: 'primary-300'}">{{item}}</span></div>
+			</colm>
 			<colm>
 			<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
 			<md-button ng-click='editModule(m)' class="md-icon-button" aria-label="Comment"><md-icon><i class="material-icons" style="color:green">edit</i></md-icon></md-button>
