@@ -44,6 +44,8 @@ var url = mongo_head.module_url;
 
 
 router.post('/insert', function(req, res, next) {
+	setTimeout(run, 1200);
+	function run() {
 		MongoClient.connect(url, function(err, db) {
 		  assert.equal(null, err);
 		  insertDocument(db, req.body, function() {
@@ -54,6 +56,8 @@ router.post('/insert', function(req, res, next) {
 		      db.close();
 		  });
 		});
+	}
+		
 });
 
 //58a2f1bb273d0169968d9899
@@ -61,7 +65,12 @@ router.post('/insert', function(req, res, next) {
 
 
 router.get('/get', function(req, res, next) {
-		MongoClient.connect(url, function(err, db) {
+    
+      setTimeout(run, 1200);
+
+      function run() {
+
+      	  MongoClient.connect(url, function(err, db) {
 		  assert.equal(null, err);
 		  fetchDocument(db, function(result) {
 		  	  res.json(result);
@@ -71,10 +80,16 @@ router.get('/get', function(req, res, next) {
 		      db.close();
 		  });
 		});
+
+      }
+
+		
 });
 
 
 router.post('/edit/:id', function(req, res, next) {
+	setTimeout(run, 1200);
+	function run() {
 		MongoClient.connect(url, function(err, db) {
 		  assert.equal(null, err);
 		  editModule(db, req.body, req.params.id, function() {
@@ -85,10 +100,16 @@ router.post('/edit/:id', function(req, res, next) {
 		      db.close();
 		  });
 		});
+
+	}
+		
 });
 
 
 router.delete('/delete/:id', function(req, res, next) {
+	setTimeout(run, 1200);
+
+	function run() {
 		MongoClient.connect(url, function(err, db) {
 		  deleteModule(db, req.params.id, function() {
 		  	  res.json({success:1});
@@ -98,6 +119,8 @@ router.delete('/delete/:id', function(req, res, next) {
 		      db.close();
 		  });
 		});
+	}
+		
 });
 
 

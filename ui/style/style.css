@@ -447,3 +447,61 @@
     display: inline-block;
     margin: 0 3px;
 }  
+.my-table table tbody td:first-child{
+    white-space: nowrap; 
+    width: 40px; 
+    max-width: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    border: 1px solid #000000;
+    vertical-align: center;
+    border: 1px solid #d9d9d9;
+    height: 100%;
+    border-bottom:none;
+}
+
+.my-table table tbody td:last-child{
+    white-space: nowrap; 
+    width: 120px; 
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    border: 1px solid #000000;
+    vertical-align: center;
+    border: 1px solid #d9d9d9;
+    height: 100%;
+    border-bottom:none;
+    padding: 0;
+}
+.my-table table tbody td .info_holder {
+   margin-top:0px;
+   opacity: 0;
+}
+.my-table table tbody td:hover .info_holder {
+   position: absolute;
+   display:block;
+   border: 1px solid #c9c9c9;
+   background-color:#fff;
+   border-radius: 2px;
+   padding: 7px;
+   margin-top:-39px;
+   margin-left: 7px;
+   transition: .2s all;
+   opacity: 1;
+}
+.my-table table tbody td .info_holder .btn {
+     border:1px solid #333;
+     color: #fff;
+     border-radius: 2px;
+     margin:0 3px;
+     background: #333;
+     cursor: pointer;
+     font-size: 12px;
+     padding: 3px;
+     position: relative;
+     top:-2px;
+  }
+.my-table table tbody td .info_holder .btn:hover {
+  background-color: #999;
+  color: #fff;
+}  

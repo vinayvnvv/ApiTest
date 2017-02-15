@@ -1,23 +1,29 @@
-var fs = require('fs');
-var custom_table = '';
-var file_location = 'json/custom_table.json';
+var db_helper = require("./../db/helper");
+var DBHelper = new db_helper();
 
-       fs.readFile(file_location, (err, data) => {
-        if (err) throw err;
-        data = String(data);
-        data = data.slice(data.indexOf("{"), data.lastIndexOf("}") + 1);
-        data = `[` + data + `]`;
-        custom_table = JSON.parse(data);
-      });
+       
+
 
 var CustomParser = function () {  
+
 
 
      
 
 
     //returns null if no match found .. returns object of the msg module if match found
-    this.parseCustomQuery = function(q) {
+    this.parseCustomQuery = function(q, callback) {
+
+        DBHelper.getModules(function(docs) {
+           var custom_table = docs;
+           console.log(docs)
+           return callback(startParsing(docs, q));
+       });
+
+      }
+
+
+      function startParsing(custom_table, q) {
 
         console.log("entering custom parse class:" + q);
         console.log(custom_table)
@@ -55,12 +61,12 @@ var CustomParser = function () {
                 var res_str = custom_table[i].res.msg;
                 var response  = {module:{
                                     id:1,
-                                    msg: this.parse_response(res_str, matched)
+                                    msg: parse_response(res_str, matched)
                                     }
                     };
 
-                if(custom_table[i].res.before_msg != undefined) response.module.beforeMsg = [{msg:this.parse_response(custom_table[i].res.before_msg, matched)}];
-                if(custom_table[i].res.after_msg != undefined) response.module.afterMsg = [{msg:this.parse_response(custom_table[i].res.after_msg, matched)}];
+                if(custom_table[i].res.before_msg != undefined) response.module.beforeMsg = [{msg:parse_response(custom_table[i].res.before_msg, matched)}];
+                if(custom_table[i].res.after_msg != undefined) response.module.afterMsg = [{msg:parse_response(custom_table[i].res.after_msg, matched)}];
   
                 if(custom_table[i].res.sub_info != undefined) {
                    response.module.type = custom_table[i].res.sub_info.type;
@@ -68,11 +74,11 @@ var CustomParser = function () {
                    response.module.sub_info = {items:[]};
                    console.log(response.module.sub_info)
                    for(var j=0;j<custom_table[i].res.sub_info.text.length;j++) {
-                        var itm = {name:this.parse_response(custom_table[i].res.sub_info.text[j], matched)};
+                        var itm = {name:parse_response(custom_table[i].res.sub_info.text[j], matched)};
                         response.module.sub_info.items.push(itm);
                    }
                 }
-                //console.log(response) 
+               //console.log(response) 
                 return response;
             } 
 
@@ -82,7 +88,7 @@ var CustomParser = function () {
 
     }
 
-    this.parse_response = function(q, array) {
+    function parse_response(q, array) {
                 console.log(array)
                 var re_regex = q.replace(/{{\$([0-9]*)}}/gi, function($1) {
                         return array[$1.replace(/[\}\{\$]*/g,'')];

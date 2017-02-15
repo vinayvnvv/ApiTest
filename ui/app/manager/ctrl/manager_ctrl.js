@@ -1,4 +1,4 @@
-app.controller('managerCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$mdToast', '$timeout', function($scope, $mdDialog, $rootScope, $http, $mdToast, $timeout){
+app.controller('managerCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$mdToast', '$timeout', 'ApiCall', 'Helper', function($scope, $mdDialog, $rootScope, $http, $mdToast, $timeout, ApiCall, Helper){
 	console.log("called createCtrl");
 
 
@@ -6,6 +6,14 @@ app.controller('managerCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$m
      	$rootScope.module_open_type = "insert";
      	$scope.openModuleModel();
 
+     }
+
+     $scope.copyText = function(str) {
+     	console.log("called copy")
+        if(Helper.copyText(str)) {
+           $scope.copied_status = "copied!"
+           $timeout(function(){ $scope.copied_status = "copy" }, 600)
+		}
      }
 
 	 $scope.openModuleModel = function() {
@@ -28,17 +36,16 @@ app.controller('managerCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$m
 	  	//$rootScope.isLoading = true;
 	  	$scope.isRefreshing = true;
 
-       var res = $http.get("api/file/read");
-       res.success(function(res) {
-       	console.log(res)
-       	console.log($scope.modules_data = JSON.parse(res));
-          	$rootScope.isLoading = false;
-          	$scope.isRefreshing = false;
-          	console.log($scope.modules_data)
-       })
-       res.error(function(res) {
-       	$rootScope.isLoading = false;
-       })
+       ApiCall.Modules.getModules()
+         .success(function(res) {
+		       	console.log(res)
+		        $scope.modules_data = res;
+		          	$rootScope.isLoading = false;
+		          	$scope.isRefreshing = false;
+		          	console.log($scope.modules_data)
+         }).error(function(res) {
+		       	$rootScope.isLoading = false;
+		       });
 
 	  }
 
@@ -73,8 +80,8 @@ app.controller('managerCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$m
 
 			    $mdDialog.show(confirm).then(function() {
 			      
-			       var res = $http.delete("api/file/delete/" + m.id_);
-					  	res.success(function(res) {
+			       ApiCall.Modules.deleteModule(m._id)
+					  	.success(function(res) {
 					  		console.log(res)
 					  		$mdToast.show(
 						      $mdToast.simple()
@@ -83,7 +90,7 @@ app.controller('managerCtrl', ['$scope', '$mdDialog', '$rootScope', '$http', '$m
 						        .hideDelay(3000)
 						    );
 
-					  		$timeout(function() {$rootScope.refresh();}, 2000);
+					  		$timeout(function() {$rootScope.refresh();}, 10);
 					  	})
 
 

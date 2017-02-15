@@ -9,7 +9,7 @@ var mdb = db;
 
 var table = require('./../class/tables');
 var Exe = require('./../class/exe');
-var db_helper = require('./../db/helper.js');
+var db_helper = require('./../db/helper');
 
 MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
 

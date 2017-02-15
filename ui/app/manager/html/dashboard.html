@@ -25,7 +25,7 @@
  <md-content style="margin:11px">
 
 
-<d-table d-class="animation-bottom-long" d-default-style="true" d-animate="true" no-paginationS d-max-rows="4" d-pagination-position="top||bottom" d-search-position="top" d-max-page-links="7"> 
+<d-table d-class="animation-bottom-long my-table" d-default-style="true" d-animate="true" no-paginationS d-max-rows="4" d-pagination-position="top||bottom" d-search-position="top" d-max-page-links="7"> 
 
 		<table-header>
 		    <colm>Id</colm>
@@ -40,8 +40,8 @@
 
 
 
-		<table-body ng-repeat="m in modules_data.custom_table" class="item" d-filterr="">
-		    <colm>{{m.id_}}</colm>
+		<table-body ng-repeat="m in modules_data" class="item" d-filterr="">
+		    <colm >{{m._id}}<span class="info_holder"><span class="btn" ng-click="copyText(m._id)">{{copied_status || 'copy' }}</span>{{m._id}}</span></colm>
 			<colm>{{m.req.query}}</colm>
 			<colm>{{m.res.msg}}</colm>
 			<colm>{{m.res.after_msg||'-'}}</colm>

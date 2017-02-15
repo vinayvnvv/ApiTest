@@ -2,7 +2,7 @@ var request = require("request");
 var rp = require('request-promise');
 var parser_ = require('./../class/parser');
 var custom_parser_ = require('./../class/custom_parser');
-var Users = require('./users')
+var users_class = require('./users')
 var parser = new parser_();
 var custom_parser = new custom_parser_();
 
@@ -12,7 +12,7 @@ var Exe = function(router) {
    this.res = router[1];
    this.next = router[2];
    var routerRes = this.res;
-   this.users = new Users(router);
+   var Users = new users_class(router);
    var $s = {
       action:null,
       action_type:null,
@@ -22,110 +22,118 @@ var Exe = function(router) {
    }; 
          this.initModule = function() {
 
-               
-                 
                  $s.queryText = this.req.body.msg.replace(/\s\s+/g, ' ').toLowerCase(); // init by removing multiple spaces
                                     
                                     // this.res.send($s.action_type)
-
-                                     if((obj = custom_parser.parseCustomQuery($s.queryText))!=null) {
-                                      console.log(obj )
-                                        routerRes.json(obj);
-                                        return;
-                                     }
-
-
-                                    if(this.checkGreeting($s.queryText))
-                                       return;
-
-                                    
-
-                                    console.log("entering next line")
-                                    var p_ = parser.findAction($s.queryText);
-                                    if(p_!=null) {
-                                    $s.action = p_.act;
-                                    $s.queryText = p_.q;
-                                    $s.res_case = p_.res_case;
-                                 }
-
-
-                                    p_ = parser.findActionType($s.queryText);
-                                    if(p_!=null) {
-                                    $s.action_type = p_.act_type;
-                                    $s.action_type_of_match = p_.type_of_match;
-                                    console.log("type of mtch:" + $s.action_type_of_match)
-                                    $s.queryText = p_.q;
-                                  }
-
-
-                                    p_ = parser.findConcat($s.queryText);
-                                    $s.concat = p_.coct;
-                                    $s.queryText = p_.q;
-
-                                    $s.queryText = parser.removeExtra($s.queryText);
-
-
-                                    console.log($s.action)
-                                    console.log($s.action_type)
-                                    console.log("*************\nparameter mapping")
-                                    console.log($s.concat)
-                                    console.log("*************")
-                                    console.log($s.queryText);
-
-                                    $s.last_str = parser.forceExtractQuery($s.queryText)
-                                    console.log("filter for: " + $s.last_str)
-
-                                    this.startChecking();
+                                     checkCustomParse(function(match) {
+                                          if(!match) defaultParse();
+                                     });
+                                    // if(this.checkGreeting($s.queryText))
+                                    //    return;
 
          }
 
-          this.checkGreeting = function(query) {
+          function checkCustomParse(callback) {
+
+             custom_parser.parseCustomQuery($s.queryText, function(obj) {
+                 if(obj!=null) {
+                              routerRes.json(obj);
+                              return callback(true);
+                    } else {
+                      callback(false);
+                    }                  
+
+             });
+
+          }
+
+
+          function defaultParse() {
+
+                if(checkGreeting($s.queryText)) return;
+
+                 console.log("entering next line")
+                  var p_ = parser.findAction($s.queryText);
+                  if(p_!=null) {
+                  $s.action = p_.act;
+                  $s.queryText = p_.q;
+                  $s.res_case = p_.res_case;
+               }
+
+
+                  p_ = parser.findActionType($s.queryText);
+                  if(p_!=null) {
+                  $s.action_type = p_.act_type;
+                  $s.action_type_of_match = p_.type_of_match;
+                  console.log("type of mtch:" + $s.action_type_of_match)
+                  $s.queryText = p_.q;
+                }
+
+
+                  p_ = parser.findConcat($s.queryText);
+                  $s.concat = p_.coct;
+                  $s.queryText = p_.q;
+
+                  $s.queryText = parser.removeExtra($s.queryText);
+
+
+                  console.log($s.action)
+                  console.log($s.action_type)
+                  console.log("*************\nparameter mapping")
+                  console.log($s.concat)
+                  console.log("*************")
+                  console.log($s.queryText);
+
+                  $s.last_str = parser.forceExtractQuery($s.queryText)
+                  console.log("filter for: " + $s.last_str)
+
+                  startChecking();
+
+
+
+          }
+
+
+          function checkGreeting(query) {
           
              var p_ = parser.findGreetingTable(query);
-                                    if(p_!=null) {
-                                      console.log("quote enable:" + p_.is_quote)
-                                      if(p_.is_quote == true)  {//send random bye quote
+                      if(p_!=null) {
+                        console.log("quote enable:" + p_.is_quote)
+                            if(p_.is_quote == true)  {//send random bye quote
 
-                                         rp("http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=").then(function(res){
-                                         // console.log(res);
-                                          var aftr = [{msg:"i have a quote for You : "},{msg:JSON.parse(res)[0].content}, {msg:"by - " + JSON.parse(res)[0].title}];
-                                          routerRes.json({module:{id:1,msg:p_.greetText,afterMsg:aftr}});
-                                       })   
-                                       
-                                       
-                                      } else {
-                                         this.res.json({module:{id:1,msg:p_.greetText}});
-                                      } 
-
-
-
-
-
-
-
-                                       return true;
-                                    } else {
-                                       return false;
-                                    }
+                               rp("http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=").then(function(res){
+                               // console.log(res);
+                                var aftr = [{msg:"i have a quote for You : "},{msg:JSON.parse(res)[0].content}, {msg:"by - " + JSON.parse(res)[0].title}];
+                                routerRes.json({module:{id:1,msg:p_.greetText,afterMsg:aftr}});
+                             })   
+                             
+                             
+                            } else {
+                               routerRes.json({module:{id:1,msg:p_.greetText}});
+                            } 
+                            return true;
+                      } else {
+                           return false;
+                      }
 
          }
 
-         this.startChecking = function() {
+         function startChecking() {
             if($s.action_type == null) {
           
               if($s.action!=null) {
 
                 if($s.res_case == "question") {
                   if($s.last_str == null || $s.last_str.length==0) {
-                  this.res.json({module:{id:1,msg:"Sorry, I am unable to understand your language!! try something usefull!"}})
+                  routerRes.json({module:{id:1,msg:"Sorry, I am unable to understand your language!! try something usefull!"}})
                } else {
                   var params = {}
-                  this.users.getUsers($s.concat, $s.last_str)
+                  Users.getUsers($s.concat, $s.last_str)
                }
 
 
                 } else if($s.res_case == "yesorno") {
-                  this.res.send("yes or no : filter:" +  $s.last_str)
+                  routerRes.send("yes or no : filter:" +  $s.last_str)
 
                 }
 
@@ -193,7 +201,7 @@ var Exe = function(router) {
             console.log(this.req.body.shortcut)
 
              if(this.req.body.shortcut == "userInfo") {
-                  this.users.getUsersShortCutInfo(this.req.body.userId)
+                  Users.getUsersShortCutInfo(this.req.body.userId)
              }
    
 

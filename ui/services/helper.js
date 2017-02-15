@@ -22,6 +22,27 @@ app.service('Helper', ['$rootScope', '$location', function($rootScope, $location
 
 	}
 
+	this.copyText = function(str) {
+
+				var para = document.createElement("P");
+			    var t = document.createTextNode(str);
+			    para.setAttribute("id","coping");
+			    para.appendChild(t);
+			    document.body.appendChild(para);
+			    
+			    
+				  var emailLink = para;  
+				  var range = document.createRange();  
+				  range.selectNode(emailLink);  
+				  window.getSelection().addRange(range);
+			      successful = document.execCommand('copy');
+
+			      document.body.removeChild(document.getElementById("coping"))
+
+			      if(successful) return true;
+			      else return false;
+	}
+
 	
 
 

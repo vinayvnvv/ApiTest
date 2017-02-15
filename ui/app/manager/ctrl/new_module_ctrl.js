@@ -1,4 +1,4 @@
-app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$mdDialog', '$mdToast', '$timeout', function($scope, $http, $rootScope, $mdDialog, $mdToast, $timeout){
+app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$mdDialog', '$mdToast', '$timeout', 'ApiCall', function($scope, $http, $rootScope, $mdDialog, $mdToast, $timeout, ApiCall){
 
 	console.log("Called dailog ctrl")
 	$scope.res_module = {};
@@ -65,11 +65,11 @@ app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$
 
 	  		if($rootScope.module_open_type == 'insert') { //insert
 	  			$scope.isLoading = true;
-			  		var res_ = $http.post("api/modules/insert", $scope.new_module);
-			  		res_.success(function(res) {
+			  		ApiCall.Modules.insertModule($scope.new_module)
+			  		  .success(function(res) {
 			  			$scope.isLoading = false;
 			  			console.log(res);
-			  			$timeout(function() {$rootScope.refresh();}, 2000)
+			  			$timeout(function() {$rootScope.refresh();}, 20)
 			  			$mdDialog.cancel();
 			  			$mdToast.show(
 						      $mdToast.simple()
@@ -81,11 +81,11 @@ app.controller('NewModuleDialogController', ['$scope', '$http', '$rootScope', '$
 
 	  		} else { //edit
 	  			$scope.isLoading = true;
-	  			var res_ = $http.post("api/file/edit/"+ $rootScope.selectedModuleForEdit.id_, $scope.new_module);
-			  		res_.success(function(res) {
+	  			ApiCall.Modules.editModule($rootScope.selectedModuleForEdit._id, $scope.new_module)
+			  		.success(function(res) {
 			  			$scope.isLoading = false;
 			  			console.log(res);
-			  			$timeout(function() {$rootScope.refresh();}, 2000)
+			  			$timeout(function() {$rootScope.refresh();}, 20)
 			  			
 			  			$mdDialog.cancel();
 			  			$mdToast.show(

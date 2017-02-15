@@ -6,6 +6,8 @@ var url = mongo_head.module_url;
 
   var DBHelper = function() {
 
+    console.log("called DBHelper Class")
+
      this.trackQueryToLocal = function(data) {
 
      	console.log("tracking query")
@@ -20,6 +22,21 @@ var url = mongo_head.module_url;
 					}
 				  });
 		});
+
+     }
+
+     this.getModules = function(callback) {
+
+      console.log("getting modules")
+
+      MongoClient.connect(url, function(err, db) {
+      assert.equal(null, err);
+            db.collection('modules').find().toArray(function(err, docs) {
+            assert.equal(null, err);
+            callback(docs);
+            db.close();
+      });
+    });
 
      }
 
