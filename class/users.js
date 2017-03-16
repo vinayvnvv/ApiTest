@@ -14,6 +14,7 @@ var Users = function(router) {
 
 
     	var res_ = auth.getAuth();
+    	console.log("res_", res_)
     	res_.then(function(response) {
 
     		console.log("response,", response)
