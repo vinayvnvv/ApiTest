@@ -27,7 +27,14 @@ var Exe = function(router) {
                                     // this.res.send($s.action_type)
                                      checkCustomParse(function(match) {
                                           if(!match) defaultParse();
+
+                                          console.log("not matched")
+
+
+                                          
                                      });
+
+
                                     // if(this.checkGreeting($s.queryText))
                                     //    return;
 

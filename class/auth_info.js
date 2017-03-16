@@ -14,7 +14,7 @@ var Auth = function() {
    	   var data1 = auth;
 
 			 var options = {
-				  url: 'http://aic1.accionlabs.com/locallogin',
+				  url: 'http://aic1.accionlabs.com/api/auth/locallogin',
 				  method:"POST",
 				  form:data1
 

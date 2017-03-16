@@ -16,13 +16,19 @@ var Users = function(router) {
     	var res_ = auth.getAuth();
     	res_.then(function(response) {
 
+    		
+    		response = JSON.parse(response)
+    		console.log("data", response.data)
+
     		  var options1 = {
-				  url: 'http://aic1.accionlabs.com/search?searchTxt='+name,
+				  url: 'http://aic1.accionlabs.com/api/aic/search?searchTxt='+name,
 				  method:"GET",
 				  headers: {
-				    'Cookie': res_.response.caseless.dict['set-cookie']
+				    'x-access-token': response.data
 				  }
 				};
+
+				console.log("options1", options1.url)
 
 				var res__ = rp(options1) ;
 				res__.then(function(response) {
@@ -58,11 +64,16 @@ var Users = function(router) {
 
      	   var res_ = auth.getAuth();
 		    	res_.then(function(response) {
+
+		    		response = JSON.parse(response)
+    		console.log("data", response.data)
+
+    		
                     var options1 = {
-						  url: 'http://aic1.accionlabs.com/profile/' + id,
+						  url: 'http://aic1.accionlabs.com/api/aic/profile/' + id,
 						  method:"GET",
 						  headers: {
-						    'Cookie': res_.response.caseless.dict['set-cookie']
+						    'x-access-token': response.data
 						  }
 						};
 
