@@ -16,8 +16,9 @@ var Users = function(router) {
     	var res_ = auth.getAuth();
     	res_.then(function(response) {
 
-    		
+    		console.log("response,", response)
     		response = JSON.parse(response)
+
     		console.log("data", response.data)
 
     		  var options1 = {
@@ -68,7 +69,7 @@ var Users = function(router) {
 		    		response = JSON.parse(response)
     		console.log("data", response.data)
 
-    		
+
                     var options1 = {
 						  url: 'http://aic1.accionlabs.com/api/aic/profile/' + id,
 						  method:"GET",
