@@ -355,6 +355,11 @@ app.directive('chatBot', ['$http', '$timeout', '$rootScope', 'Parser', '$compile
 					}
   				}
 
+       $scope.closeChat = function() {
+        console.log("cloin..")
+        $rootScope.isOpened = false;
+       }   
+
 
 
   				//call init module

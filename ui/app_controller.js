@@ -6,10 +6,12 @@ app.controller('mainCtrl', ['$scope', 'Theme', '$element', '$rootScope', '$mdCol
     { name: 'Peter Carlsson', img: 'img/100-2.jpeg', newMessage: false }
   ];
 
+   $rootScope.isOpened = false;
+
 
   //set colors variable
 
-  $rootScope.chat_bg_color = $mdColors.getThemeColor('primary-A700');
+  $rootScope.chat_bg_color = $mdColors.getThemeColor('primary-500');
   console.log($rootScope.chat_bg_color)
 
 

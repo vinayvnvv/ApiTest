@@ -1,21 +1,20 @@
 
-<div ng-draggablee='dragOptions' class="chat" style="{{custom_parent_style}};{{chat_custom_height}}">
+<div ng-draggablee='dragOptions' class="chat zoomIn anim" style="{{custom_parent_style}};{{chat_custom_height}}">
 
 		<md-toolbar class="md-hue-2">
-		 <div class="md-toolbar-tools">
-		        <h2>
-		          <span class="title">Assistant</span>
-		        </h2>
-        </div>
+		        <span class="title">Ask</span>
+		        <span class="actions" ng-click="closeChat()"><i class="material-icons">close</i></span>
+        
         </md-toolbar>
 
 
 
 
 		<chat-scroller class="container" chat-scroller style="{{scroller_custom_height}}">
-				<li ng-animate="'animate'" ng-repeat="m in msgs track by $index" class="animation msg {{m.by || 'bot'}} {{m.msg.msg_style}}">
-				<ng-include src="'directives/templates/chat-msgs.html'"></ng-include>
-				</li>
+		    
+				<div class="c_c" ng-repeat="m in msgs track by $index" >
+				<ng-include src="'directives/templates/chat-msgs.html'" class="anim slideInUp msg {{m.by || 'bot'}} {{m.msg.msg_style}}"></ng-include>
+				</div>
 				<div ng-if="suggestion" ng-include="suggestion_template" class="sug-container"></div>
 				<div style="display:{{typing}}" class="msg bot typing">...</div>
 		</chat-scroller>

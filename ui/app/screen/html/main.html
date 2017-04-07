@@ -1,13 +1,13 @@
 <html>
 
-
+<img class="logo" src="sound/logo.png" width="200px"/>
 <div class="demo">Chat BOT Development</div>
 
-
-<chat-bot custom-height="510" custom-parent-style="right:0px;left:330px"></chat-bot>
-
-<chat-bot  custom-height="510" custom-parent-style="right:300px;left:10px"></chat-bot>
-
+<chat-bot ng-show="isOpened"  custom-height="510" custom-parent-style="right:0px;"></chat-bot>
+<span class="open-btn bounceInUp anim" ng-show="!isOpened" ng-click="isOpened = true">
+	<span>Ask Bot</span>
+	<i class="material-icons">chat</i>
+</span>
 
 
 </html>
